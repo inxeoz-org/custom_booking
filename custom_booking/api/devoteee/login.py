@@ -9,7 +9,7 @@ def login(name):
 
 @frappe.whitelist(allow_guest=True)
 def create_customer(phone):
-	exists = frappe.db.exists("Customer", {"mobile_no": phone})
+	exists = frappe.db.exists("Customer", {"custom_phone": phone})
 
 	if exists:
 		return "Devoteee Exists"
@@ -19,7 +19,7 @@ def create_customer(phone):
 			"doctype": "Customer",
 			"customer_name": f"{phone}",
 			"customer_type": "Individual",
-			"mobile_no": phone,
+			"custom_phone": phone,
 		}
 	)
 
@@ -42,15 +42,13 @@ def customer_login(phone, password):
 	frappe.set_user("Administrator")
 
 	# Get customer by mobile number
-	customer_name = frappe.db.get_value("Customer", {"mobile_no": phone})
+	customer_name = frappe.db.get_value("Customer", {"custom_phone": phone})
 	if not customer_name:
 		return "Customer not found"
 
 	customer = frappe.get_doc("Customer", customer_name)
 
-	new_token_map_record = frappe.get_doc(
-		{"doctype": "Token Mapping", "token": token, "customer": customer_name}
-	)
+	new_token_map_record = frappe.get_doc({"doctype": "Token Mapping", "token": token, "custom_phone": phone})
 
 	new_token_map_record.insert(ignore_permissions=True)
 

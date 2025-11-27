@@ -25,12 +25,15 @@ def token2customer(fn):
 		# ----------------------------------
 		# 2. Resolve customer from token
 		# ----------------------------------
-		customer_name = frappe.db.get_value("Token Mapping", {"token": token}, "customer")
+		custom_phone = frappe.db.get_value("Token Mapping", {"token": token}, "custom_phone")
+		customer_name = frappe.db.get_value("Customer", {"custom_phone": custom_phone}, "customer_name")
 
 		if not customer_name:
-			return {"error": "Invalid token"}
+			frappe.throw("Invalid token")
 
 		# Attach resolved customer so endpoint can use it
+		#
+		print("#" * 20 + customer_name)
 		frappe.local.form_dict["customer_name"] = customer_name
 
 		return fn(*args, **kwargs)

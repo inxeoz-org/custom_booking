@@ -1,33 +1,39 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:token",
  "creation": "2025-11-27 16:16:27.769521",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "token",
-  "customer"
+  "custom_phone"
  ],
  "fields": [
   {
    "fieldname": "token",
    "fieldtype": "Data",
-   "label": "token"
+   "in_list_view": 1,
+   "label": "token",
+   "reqd": 1,
+   "unique": 1
   },
   {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "customer",
-   "options": "Customer"
+   "fieldname": "custom_phone",
+   "fieldtype": "Data",
+   "label": "custom_phone",
+   "options": "Customer",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-27 16:16:59.097784",
+ "modified": "2025-11-27 23:29:37.267164",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Token Mapping",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
