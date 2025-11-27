@@ -13,11 +13,13 @@
   {
    "fieldname": "login_time",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "login time"
   },
   {
    "fieldname": "token",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "token"
   }
  ],
@@ -25,7 +27,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-27 14:47:18.830733",
+ "modified": "2025-11-27 14:49:03.885664",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Session Login Info Table",
