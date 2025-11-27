@@ -7,17 +7,14 @@ from ..token2customer import token2customer
 
 @frappe.whitelist(allow_guest=True)
 @token2customer
-def get_customer_profile():
-	customer = frappe.local.form_dict["customer_name"]
-	return {"customer": customer}
-
-
-@frappe.whitelist(allow_guest=True)
-@token2customer
 def profile():
-	customer_name = frappe.local.form_dict["customer_name"]
+	customer_id = frappe.local.form_dict["customer_id"]
 
-	customer = frappe.get_doc("Customer", customer_name)
+	if not customer_id:
+		frappe.throw("customer_id is required")
+
+	frappe.set_user("Administrator")
+	customer = frappe.get_doc("Customer", customer_id)
 
 	# return customer
 	print(str(customer.custom_aadhar))
@@ -33,20 +30,26 @@ def profile():
 @frappe.whitelist(allow_guest=True)
 @token2customer
 def update_profile(devoteee_name: str, email: str, gender: str, dob: str, aadhar: str, location: str):
-	customer_name = frappe.local.form_dict.get("customer_name")
+	customer_id = frappe.local.form_dict.get("customer_id")
 
-	if not customer_name:
-		frappe.throw("customer_name is required")
-
-	customer = frappe.get_doc("Customer", customer_name)
+	if not customer_id:
+		frappe.throw("customer_id is required")
 
 	frappe.set_user("Administrator")
-	customer.customer_name = devoteee_name
-	customer.email = email
-	customer.gender = gender
-	customer.custom_dob = dob
-	customer.custom_aadhar = aadhar
-	customer.custom_location = location
+	customer = frappe.get_doc("Customer", customer_id)
+
+	if devoteee_name:
+		customer.customer_name = devoteee_name
+	if email:
+		customer.email = email
+	if gender:
+		customer.gender = gender
+	if dob:
+		customer.custom_dob = dob
+	if aadhar:
+		customer.custom_aadhar = aadhar
+	if location:
+		customer.custom_location = location
 
 	customer.save()
 
