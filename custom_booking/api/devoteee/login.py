@@ -33,9 +33,11 @@ def create_customer(phone):
 def customer_login(phone, password):
 	# TODO: replace with real external verification
 	token = random_string(16)
+	# token = None
 
 	if token is None:
-		return "invalid credentials"
+		frappe.throw("Invalid credentials", frappe.ValidationError)
+		# return "invalid credentials"
 
 	frappe.set_user("Administrator")
 
@@ -46,7 +48,14 @@ def customer_login(phone, password):
 
 	customer = frappe.get_doc("Customer", customer_name)
 
+	new_token_map_record = frappe.get_doc(
+		{"doctype": "Token Mapping", "token": token, "customer": customer_name}
+	)
+
+	new_token_map_record.insert(ignore_permissions=True)
+
 	# Add session info to child table
+
 	customer.append("custom_session_info", {"token": token, "login_time": frappe.utils.now()})
 
 	customer.save(ignore_permissions=True)
