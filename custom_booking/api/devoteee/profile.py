@@ -18,9 +18,12 @@ def profile():
 
 	customer = frappe.get_doc("Customer", customer_name)
 
-	return customer
-	# print(str(customer.custom_aadhar))
-	# return {
-	# 	"devoteee_name": customer.customer_name,
-	# 	"is_kyc_complete": customer.custom_aadhar and len(str(customer.custom_aadhar)) > 0,
-	# }
+	# return customer
+	print(str(customer.custom_aadhar))
+
+	is_kyc_complete = bool(customer.custom_aadhar) and len(str(customer.custom_aadhar)) > 0
+
+	return {
+		"devoteee_name": customer.customer_name,
+		"is_kyc_complete": is_kyc_complete,
+	}
