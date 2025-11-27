@@ -1,6 +1,5 @@
 import frappe
 from frappe.utils import random_string
-from typing_extensions import Dict
 
 from ..token2customer import token2customer
 
@@ -23,6 +22,11 @@ def profile():
 
 	return {
 		"devoteee_name": customer.customer_name,
+		"email": customer.custom_email,
+		"gender": customer.gender,
+		"dob": customer.custom_dob,
+		"aadhar": customer.custom_aadhar,
+		"location": customer.custom_location,
 		"is_kyc_complete": is_kyc_complete,
 	}
 
@@ -41,7 +45,7 @@ def update_profile(devoteee_name: str, email: str, gender: str, dob: str, aadhar
 	if devoteee_name:
 		customer.customer_name = devoteee_name
 	if email:
-		customer.email = email
+		customer.custom_email = email
 	if gender:
 		customer.gender = gender
 	if dob:
