@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-28 15:45:30.883549",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_jooc",
+  "amended_from",
+  "customer",
+  "appointment_datetime",
+  "companion",
+  "darshan_type",
+  "state"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_jooc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Darshan Appointment",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "appointment_datetime",
+   "fieldtype": "Datetime",
+   "label": "appointment datetime"
+  },
+  {
+   "fieldname": "companion",
+   "fieldtype": "Table",
+   "label": "companion",
+   "options": "Companion Table"
+  },
+  {
+   "default": "vip darshan",
+   "fieldname": "darshan_type",
+   "fieldtype": "Data",
+   "label": "darshan_type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "state"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-11-28 16:17:50.177449",
+ "modified_by": "Administrator",
+ "module": "Custom Booking",
+ "name": "Darshan Appointment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
