@@ -18,8 +18,6 @@ def profile():
 	# return customer
 	print(str(customer.custom_aadhar))
 
-	is_kyc_complete = bool(customer.custom_aadhar) and len(str(customer.custom_aadhar)) > 0
-
 	return {
 		"devoteee_name": customer.customer_name,
 		"email": customer.custom_email,
@@ -27,7 +25,6 @@ def profile():
 		"dob": customer.custom_dob,
 		"aadhar": customer.custom_aadhar,
 		"location": customer.custom_location,
-		"is_kyc_complete": is_kyc_complete,
 	}
 
 
