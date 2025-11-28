@@ -44,7 +44,8 @@ def customer_login(phone, password):
 	# Get customer by mobile number
 	customer_name = frappe.db.get_value("Customer", {"custom_phone": phone})
 	if not customer_name:
-		return "Customer not found"
+		frappe.throw("Customer not found")
+		# return "Customer not found"
 
 	customer = frappe.get_doc("Customer", customer_name)
 
