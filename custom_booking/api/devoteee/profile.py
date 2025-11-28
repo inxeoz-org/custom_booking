@@ -25,6 +25,7 @@ def profile():
 		"dob": customer.custom_dob,
 		"aadhar": customer.custom_aadhar,
 		"location": customer.custom_location,
+		"companion": customer.custom_companion,
 	}
 
 
