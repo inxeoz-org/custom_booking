@@ -12,7 +12,7 @@ def create_customer(phone):
 	exists = frappe.db.exists("Customer", {"custom_phone": phone})
 
 	if exists:
-		return "Devoteee Exists"
+		frappe.throw("Devoteee Exists", frappe.ValidationError)
 
 	new_customer = frappe.get_doc(
 		{
@@ -60,3 +60,41 @@ def customer_login(phone, password):
 	customer.save(ignore_permissions=True)
 
 	return token
+
+
+import frappe
+from google.auth.transport import requests
+from google.oauth2 import id_token
+
+
+@frappe.whitelist(allow_guest=True)
+def google_login(token):
+	try:
+		# Verify ID token
+		idinfo = id_token.verify_oauth2_token(
+			token,
+			requests.Request(),
+			"877753772904-78b39tu876jt75f2he4t7nluuvlk7fi8.apps.googleusercontent.com",
+		)
+
+		email = idinfo["email"]
+		name = idinfo.get("name")
+		picture = idinfo.get("picture")
+
+		# Find or create user
+		user = frappe.db.get_value("User", {"email": email})
+
+		if not user:
+			user = frappe.get_doc(
+				{"doctype": "User", "email": email, "first_name": name, "enabled": 1, "send_welcome_email": 0}
+			)
+			user.insert(ignore_permissions=True)
+
+		frappe.local.login_manager.user = email
+		frappe.local.login_manager.post_login()
+
+		return {"status": "ok", "email": email}
+
+	except Exception as e:
+		frappe.log_error(frappe.get_traceback(), "Google Login Failed")
+		return {"error": str(e)}

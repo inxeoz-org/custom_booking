@@ -9,6 +9,7 @@
   "amended_from",
   "customer",
   "appointment_datetime",
+  "fetch_default_companion",
   "companion",
   "darshan_type",
   "state"
@@ -56,13 +57,18 @@
    "fieldname": "state",
    "fieldtype": "Data",
    "label": "state"
+  },
+  {
+   "fieldname": "fetch_default_companion",
+   "fieldtype": "Button",
+   "label": "Fetch Default Companion"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-11-28 16:17:50.177449",
+ "modified": "2025-11-28 17:09:02.466447",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Darshan Appointment",
