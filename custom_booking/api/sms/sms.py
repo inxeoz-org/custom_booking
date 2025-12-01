@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 
 import frappe
 import requests
@@ -13,7 +14,6 @@ def send_sms_otp(phone):
 	# store OTP
 	frappe.cache().set_value(f"otp_{phone}", otp, expires_in_sec=180)
 	print("#" * 30, "\n", otp, "\n", "#" * 30)
-
 	# # SMS API CALL (example)
 	# sms_api_url = "https://YOUR_SMS_GATEWAY/send"
 	# requests.get(sms_api_url, params={
@@ -29,13 +29,13 @@ def verify_sms_otp(phone, otp):
 	saved_otp = frappe.cache().get_value(f"otp_{phone}")
 
 	if not saved_otp:
-		return {"verified": False, "message": "OTP expired"}
+		return {"VERIFIED": False, "message": "OTP expired"}
 
 	if otp != saved_otp:
-		return {"verified": False, "message": "Invalid OTP"}
+		return {"VERIFIED": False, "message": "Invalid OTP"}
 
 	if otp == saved_otp:
 		frappe.cache().delete_value(f"otp_{phone}")
-		return {"verified": True, "message": "OTP verified"}
+		return {"VERIFIED": True, "message": "OTP VERIFIED"}
 
-	return {"verified": False, "message": "Invalid OTP"}
+	return {"VERIFIED": False, "message": "Invalid OTP"}
