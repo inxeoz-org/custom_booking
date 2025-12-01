@@ -24,7 +24,7 @@ def devoteee_login_req(phone, otp=None):
 	else:
 		verification_status = verify_sms_otp(phone, otp)
 		if verification_status["VERIFIED"]:
-			devoteee_id = create_customer(phone)
+			devoteee_id = create_customer(phone=phone)
 			if devoteee_id is None:
 				return "Failed to create customer"
 			return jwt_token({"id": devoteee_id})
@@ -32,15 +32,15 @@ def devoteee_login_req(phone, otp=None):
 			return verification_status["message"]
 
 
-def create_customer(phone: int | None = None, mail: str | None = None, name: str | None = None):
-	if phone is None and mail is None:
+def create_customer(phone: int | None = None, email: str | None = None, name: str | None = None):
+	if phone is None and email is None:
 		return None
 
 	exists = None
 	if phone:
 		exists = frappe.db.exists("Customer", {"custom_phone": phone})
-	if exists is None and mail:
-		exists = frappe.db.exists("Customer", {"custom_email": mail})
+	if exists is None and email:
+		exists = frappe.db.exists("Customer", {"custom_email": email})
 
 	if exists:
 		customer_doc = frappe.get_doc("Customer", exists)
@@ -50,10 +50,10 @@ def create_customer(phone: int | None = None, mail: str | None = None, name: str
 	new_customer = frappe.get_doc(
 		{
 			"doctype": "Customer",
-			"customer_name": name or phone or mail,
+			"customer_name": name or phone or email,
 			"customer_type": "Individual",
 			"custom_phone": phone or "",
-			"custom_email": mail or "",
+			"custom_email": email or "",
 			"custom_devoteee_id": frappe.model.naming.make_autoname("CUST-.###########"),
 		}
 	)
@@ -81,7 +81,7 @@ def google_login(token):
 		email = idinfo["email"]
 		name = idinfo.get("name")
 
-		devoteee_id = create_customer(email, name)
+		devoteee_id = create_customer(email=email, name=name)
 
 		return jwt_token({"id": devoteee_id})
 
