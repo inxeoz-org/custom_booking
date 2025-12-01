@@ -1,3 +1,4 @@
+import re
 import stat
 from pickletools import stackslice
 from xxlimited import new
@@ -24,51 +25,41 @@ def devoteee_login_req(phone, otp=None):
 		verification_status = verify_sms_otp(phone, otp)
 		if verification_status["VERIFIED"]:
 			devoteee_id = create_customer(phone)
+			if devoteee_id is None:
+				return "Failed to create customer"
 			return jwt_token({"id": devoteee_id})
 		else:
 			return verification_status["message"]
 
 
-def create_customer(phone):
-	# Check if already exists
-	exists = frappe.db.exists("Customer", {"custom_phone": phone})
+def create_customer(phone: int | None = None, mail: str | None = None, name: str | None = None):
+	if phone is None and mail is None:
+		return None
+
+	exists = None
+	if phone:
+		exists = frappe.db.exists("Customer", {"custom_phone": phone})
+	if exists is None and mail:
+		exists = frappe.db.exists("Customer", {"custom_email": mail})
+
 	if exists:
-		return exists
+		customer_doc = frappe.get_doc("Customer", exists)
+		return customer_doc.custom_devoteee_id
 
 	# Create new customer doc
 	new_customer = frappe.get_doc(
 		{
 			"doctype": "Customer",
-			"customer_name": phone,
+			"customer_name": name or phone or mail,
 			"customer_type": "Individual",
-			"custom_phone": phone,
-			"custom_devoteee_id": frappe.model.naming.make_autoname("CUST-.###########"),
-		}
-	)
-
-	new_customer.insert(ignore_permissions=True)
-	return new_customer.custom_devoteee_id
-
-
-def create_customer_using_mail(mail, name):
-	exists = frappe.db.exists("Customer", {"custom_email": mail})
-
-	if exists:
-		return exists
-
-	new_customer = frappe.get_doc(
-		{
-			"doctype": "Customer",
-			"customer_name": f"{name}",
-			"customer_type": "Individual",
-			"custom_email": mail,
+			"custom_phone": phone or "",
+			"custom_email": mail or "",
 			"custom_devoteee_id": frappe.model.naming.make_autoname("CUST-.###########"),
 		}
 	)
 
 	new_customer.insert(ignore_permissions=True)
 	frappe.db.commit()
-
 	return new_customer.custom_devoteee_id
 
 
@@ -90,7 +81,7 @@ def google_login(token):
 		email = idinfo["email"]
 		name = idinfo.get("name")
 
-		devoteee_id = create_customer_using_mail(email, name)
+		devoteee_id = create_customer(email, name)
 
 		return jwt_token({"id": devoteee_id})
 
