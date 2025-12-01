@@ -73,7 +73,12 @@ def token_auth(fn):
 			frappe.throw("Invalid token", frappe.PermissionError)
 
 		frappe.local.form_dict["devotee_details"] = data["details"]
-		frappe.local.form_dict["customer_id"] = data["details"]["id"]
+		devoteee_id = data["details"]["id"]
+
+		customer_id = frappe.db.get_value("Customer", {"custom_devoteee_id": devoteee_id})
+		if not customer_id:
+			frappe.throw("Devoteee not found", frappe.DoesNotExistError)
+		frappe.local.form_dict["customer_id"] = customer_id
 
 		print("@" * 30, data["details"]["id"])
 

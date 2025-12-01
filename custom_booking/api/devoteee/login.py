@@ -1,5 +1,6 @@
 import stat
 from pickletools import stackslice
+from xxlimited import new
 
 import frappe
 from frappe.utils import random_string
@@ -29,24 +30,24 @@ def devoteee_login_req(phone, otp=None):
 
 
 def create_customer(phone):
+	# Check if already exists
 	exists = frappe.db.exists("Customer", {"custom_phone": phone})
-
 	if exists:
 		return exists
 
+	# Create new customer doc
 	new_customer = frappe.get_doc(
 		{
 			"doctype": "Customer",
-			"customer_name": f"{phone}",
+			"customer_name": phone,
 			"customer_type": "Individual",
 			"custom_phone": phone,
+			"custom_devoteee_id": frappe.model.naming.make_autoname("CUST-.###########"),
 		}
 	)
 
 	new_customer.insert(ignore_permissions=True)
-	frappe.db.commit()
-
-	return new_customer.name
+	return new_customer.custom_devoteee_id
 
 
 def create_customer_using_mail(mail, name):
@@ -61,13 +62,14 @@ def create_customer_using_mail(mail, name):
 			"customer_name": f"{name}",
 			"customer_type": "Individual",
 			"custom_email": mail,
+			"custom_devoteee_id": frappe.model.naming.make_autoname("CUST-.###########"),
 		}
 	)
 
 	new_customer.insert(ignore_permissions=True)
 	frappe.db.commit()
 
-	return new_customer.name
+	return new_customer.custom_devoteee_id
 
 
 import frappe
@@ -88,9 +90,9 @@ def google_login(token):
 		email = idinfo["email"]
 		name = idinfo.get("name")
 
-		customer_id = create_customer_using_mail(email, name)
+		devoteee_id = create_customer_using_mail(email, name)
 
-		return jwt_token({"id": customer_id})
+		return jwt_token({"id": devoteee_id})
 
 	except Exception as e:
 		frappe.log_error(frappe.get_traceback(), "Google Login Failed")
