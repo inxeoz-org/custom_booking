@@ -54,5 +54,4 @@ def update_profile(devoteee_name: str, email: str, gender: str, dob: str, aadhar
 		customer.custom_location = location
 
 	customer.save()
-
-	return "Profile Updated"
+	return profile()

@@ -49,6 +49,27 @@ def create_customer(phone):
 	return new_customer.name
 
 
+def create_customer_using_mail(mail, name):
+	exists = frappe.db.exists("Customer", {"custom_email": mail})
+
+	if exists:
+		return exists
+
+	new_customer = frappe.get_doc(
+		{
+			"doctype": "Customer",
+			"customer_name": f"{name}",
+			"customer_type": "Individual",
+			"custom_email": mail,
+		}
+	)
+
+	new_customer.insert(ignore_permissions=True)
+	frappe.db.commit()
+
+	return new_customer.name
+
+
 import frappe
 from google.auth.transport import requests
 from google.oauth2 import id_token
@@ -66,22 +87,11 @@ def google_login(token):
 
 		email = idinfo["email"]
 		name = idinfo.get("name")
-		picture = idinfo.get("picture")
 
-		# Find or create user
-		user = frappe.db.get_value("User", {"email": email})
+		customer_id = create_customer_using_mail(email, name)
 
-		if not user:
-			user = frappe.get_doc(
-				{"doctype": "User", "email": email, "first_name": name, "enabled": 1, "send_welcome_email": 0}
-			)
-			user.insert(ignore_permissions=True)
-
-		frappe.local.login_manager.user = email
-		frappe.local.login_manager.post_login()
-
-		return {"status": "ok", "email": email}
+		return jwt_token({"id": customer_id})
 
 	except Exception as e:
 		frappe.log_error(frappe.get_traceback(), "Google Login Failed")
-		return {"error": str(e)}
+		frappe.throw("Google Login Failed")
