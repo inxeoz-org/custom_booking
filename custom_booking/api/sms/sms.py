@@ -39,3 +39,36 @@ def verify_sms_otp(phone, otp):
 		return {"VERIFIED": True, "message": "OTP VERIFIED"}
 
 	return {"VERIFIED": False, "message": "Invalid OTP"}
+
+
+def send_email_otp(email):
+	otp = str(random.randint(100000, 999999))
+	# store OTP
+	frappe.cache().set_value(f"otp_{email}", otp, expires_in_sec=180)
+	print("#" * 30, "\n", otp, "\n", "#" * 30)
+	# # Email API CALL (example)
+	# email_api_url = "https://YOUR_EMAIL_GATEWAY/send"
+	# requests.get(email_api_url, params={
+	#     "apikey": "YOUR_KEY",
+	#     "email": email,
+	#     "subject": "OTP Verification",
+	#     "body": f"Your OTP is {otp}"
+	# })
+
+	return {"otp_sent": True, "message": otp}  # testing
+
+
+def verify_email_otp(email, otp):
+	saved_otp = frappe.cache().get_value(f"otp_{email}")
+
+	if not saved_otp:
+		return {"VERIFIED": False, "message": "OTP expired"}
+
+	if otp != saved_otp:
+		return {"VERIFIED": False, "message": "Invalid OTP"}
+
+	if otp == saved_otp:
+		frappe.cache().delete_value(f"otp_{email}")
+		return {"VERIFIED": True, "message": "OTP VERIFIED"}
+
+	return {"VERIFIED": False, "message": "Invalid OTP"}

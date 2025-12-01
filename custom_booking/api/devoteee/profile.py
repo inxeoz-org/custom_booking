@@ -3,7 +3,7 @@ from typing import Dict
 import frappe
 from frappe.utils import random_string
 
-from ..sms.sms import send_sms_otp, verify_sms_otp
+from ..sms.sms import send_email_otp, send_sms_otp, verify_email_otp, verify_sms_otp
 from ..token.token import token_auth
 
 
@@ -38,6 +38,7 @@ def profile():
 def update_profile(
 	devoteee_name: str | None = None,
 	email: str | None = None,
+	otp_email: str | None = None,
 	gender: str | None = None,
 	dob: str | None = None,
 	aadhar: str | None = None,
@@ -45,6 +46,8 @@ def update_profile(
 	companion: Dict | None = None,
 	phone: int | None = None,
 	otp: str | None = None,
+	email2: str | None = None,
+	otp_email2: str | None = None,
 ):
 	customer_id = frappe.local.form_dict.get("customer_id")
 
@@ -57,7 +60,18 @@ def update_profile(
 	if devoteee_name:
 		customer.customer_name = devoteee_name
 	if email:
-		customer.custom_email = email
+		previous_email = customer.custom_email
+
+		if email != previous_email:
+			if otp_email is None:
+				status = send_email_otp(email)
+				return status["message"]
+			else:
+				verification_status = verify_email_otp(email, otp_email)
+				if verification_status["VERIFIED"]:
+					customer.custom_email = email
+				else:
+					return verification_status["message"]
 	if gender:
 		customer.gender = gender
 	if dob:
@@ -74,6 +88,17 @@ def update_profile(
 			verification_status = verify_sms_otp(phone, otp)
 			if verification_status["VERIFIED"]:
 				customer.custom_phone = phone
+			else:
+				return verification_status["message"]
+
+	if email2:
+		if otp_email2 is None:
+			status = send_email_otp(email2)
+			return status["message"]
+		else:
+			verification_status = verify_email_otp(email2, otp_email2)
+			if verification_status["VERIFIED"]:
+				customer.custom_email2 = email2
 			else:
 				return verification_status["message"]
 
