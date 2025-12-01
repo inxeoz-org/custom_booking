@@ -1,11 +1,11 @@
 import frappe
 from frappe.utils import random_string
 
-from ..token2customer import token2customer
+from ..token.token import token_auth
 
 
 @frappe.whitelist(allow_guest=True)
-@token2customer
+@token_auth
 def profile():
 	customer_id = frappe.local.form_dict["customer_id"]
 
@@ -30,7 +30,7 @@ def profile():
 
 
 @frappe.whitelist(allow_guest=True)
-@token2customer
+@token_auth
 def update_profile(devoteee_name: str, email: str, gender: str, dob: str, aadhar: str, location: str):
 	customer_id = frappe.local.form_dict.get("customer_id")
 

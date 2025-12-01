@@ -2,11 +2,11 @@ from datetime import datetime
 
 import frappe
 
-from ..token2customer import token2customer
+from ..token.token import token_auth
 
 
 @frappe.whitelist(allow_guest=True)
-@token2customer
+@token_auth
 def create_appointment(appointment_datetime):
 	customer_id = frappe.local.form_dict.get("customer_id")
 
@@ -36,7 +36,7 @@ def create_appointment(appointment_datetime):
 
 
 @frappe.whitelist(allow_guest=True)
-@token2customer
+@token_auth
 def appointment_list():
 	customer_id = frappe.local.form_dict.get("customer_id")
 
@@ -54,7 +54,7 @@ def appointment_list():
 
 
 @frappe.whitelist(allow_guest=True)
-@token2customer
+@token_auth
 def appointment_details(appointment_id):
 	customer_id = frappe.local.form_dict.get("customer_id")
 	if not customer_id:
