@@ -73,7 +73,9 @@ def token_auth(fn):
 			frappe.throw("Invalid token", frappe.PermissionError)
 
 		frappe.local.form_dict["devotee_details"] = data["details"]
-		frappe.local.form_dict["customer_id"] = data["details"]["customer_id"]
+		frappe.local.form_dict["customer_id"] = data["details"]["id"]
+
+		print("@" * 30, data["details"]["id"])
 
 		return fn(*args, **kwargs)
 
