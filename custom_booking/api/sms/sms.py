@@ -22,7 +22,7 @@ def send_sms_otp(phone):
 	#     "message": f"Your OTP is {otp}"
 	# })
 
-	return {"otp_sent": True, "message": "OTP sent"}
+	return {"otp_sent": True, "message": otp}  # testing
 
 
 def verify_sms_otp(phone, otp):
