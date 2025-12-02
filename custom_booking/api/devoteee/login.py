@@ -12,6 +12,8 @@ from ..token.token import jwt_token
 
 
 def valid_phone(phone: int):
+	return len(f"{phone}") == 10
+	pass
 	if not phone:
 		return False
 	if not re.match(r"^\d{10}$", phone):
@@ -20,7 +22,7 @@ def valid_phone(phone: int):
 
 
 @frappe.whitelist(allow_guest=True)
-def devoteee_login_req(phone: int, otp=None):
+def devoteee_login_req(phone: int, otp: int | None = None):
 	if not valid_phone(phone):
 		frappe.throw("Invalid phone number")
 
@@ -28,7 +30,7 @@ def devoteee_login_req(phone: int, otp=None):
 		status = send_sms_otp(phone)
 		return status["message"]
 	else:
-		verification_status = verify_sms_otp(phone, otp)
+		verification_status = verify_sms_otp(phone=phone, otp=otp)
 		if verification_status["VERIFIED"]:
 			devoteee_id = create_customer(phone=phone)
 			if devoteee_id is None:
@@ -58,8 +60,8 @@ def create_customer(phone: int | None = None, email: str | None = None, name: st
 			"doctype": "Customer",
 			"customer_name": name or phone or email,
 			"customer_type": "Individual",
-			"custom_phone": phone or "",
-			"custom_email": email or "",
+			"custom_phone": phone,
+			"custom_email": email,
 			"custom_devoteee_id": frappe.model.naming.make_autoname("CUST-.###########"),
 		}
 	)

@@ -10,7 +10,7 @@ from ..token.token import jwt_token
 
 
 def send_sms_otp(phone: int):
-	otp = str(random.randint(100000, 999999))
+	otp = random.randint(100000, 999999)
 	# store OTP
 	frappe.cache().set_value(f"otp_{phone}", otp, expires_in_sec=180)
 	print("#" * 30, "\n", otp, "\n", "#" * 30)
@@ -27,7 +27,7 @@ def send_sms_otp(phone: int):
 
 def verify_sms_otp(phone: int, otp: int):
 	saved_otp = frappe.cache().get_value(f"otp_{phone}")
-
+	print(type(saved_otp), "**" * 20)
 	if not saved_otp:
 		return {"VERIFIED": False, "message": "OTP expired"}
 
@@ -42,7 +42,7 @@ def verify_sms_otp(phone: int, otp: int):
 
 
 def send_email_otp(email):
-	otp = str(random.randint(100000, 999999))
+	otp = random.randint(100000, 999999)
 	# store OTP
 	frappe.cache().set_value(f"otp_{email}", otp, expires_in_sec=180)
 	print("#" * 30, "\n", otp, "\n", "#" * 30)
