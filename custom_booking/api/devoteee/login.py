@@ -58,7 +58,7 @@ def create_customer(phone: int | None = None, email: str | None = None, name: st
 	new_customer = frappe.get_doc(
 		{
 			"doctype": "Customer",
-			"customer_name": name or phone or email,
+			"customer_name": name or email or f"{phone}",
 			"customer_type": "Individual",
 			"custom_phone": phone,
 			"custom_email": email,

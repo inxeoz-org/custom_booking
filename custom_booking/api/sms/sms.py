@@ -27,7 +27,7 @@ def send_sms_otp(phone: int):
 
 def verify_sms_otp(phone: int, otp: int):
 	saved_otp = frappe.cache().get_value(f"otp_{phone}")
-	print(type(saved_otp), "**" * 20)
+	print(type(saved_otp), "**" * 20, saved_otp, otp, saved_otp == otp)
 	if not saved_otp:
 		return {"VERIFIED": False, "message": "OTP expired"}
 
