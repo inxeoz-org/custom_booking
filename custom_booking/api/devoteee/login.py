@@ -11,13 +11,19 @@ from ..sms.sms import send_sms_otp, verify_sms_otp
 from ..token.token import jwt_token
 
 
-@frappe.whitelist(allow_guest=True)
-def login(name):
-	return "You got logged in! " + name
+def valid_phone(phone: int):
+	if not phone:
+		return False
+	if not re.match(r"^\d{10}$", phone):
+		return False
+	return True
 
 
 @frappe.whitelist(allow_guest=True)
-def devoteee_login_req(phone, otp=None):
+def devoteee_login_req(phone: int, otp=None):
+	if not valid_phone(phone):
+		frappe.throw("Invalid phone number")
+
 	if otp is None:
 		status = send_sms_otp(phone)
 		return status["message"]

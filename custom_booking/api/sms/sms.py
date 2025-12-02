@@ -9,7 +9,7 @@ from typing_extensions import Dict
 from ..token.token import jwt_token
 
 
-def send_sms_otp(phone):
+def send_sms_otp(phone: int):
 	otp = str(random.randint(100000, 999999))
 	# store OTP
 	frappe.cache().set_value(f"otp_{phone}", otp, expires_in_sec=180)
@@ -25,7 +25,7 @@ def send_sms_otp(phone):
 	return {"otp_sent": True, "message": otp}  # testing
 
 
-def verify_sms_otp(phone, otp):
+def verify_sms_otp(phone: int, otp: int):
 	saved_otp = frappe.cache().get_value(f"otp_{phone}")
 
 	if not saved_otp:
@@ -58,7 +58,7 @@ def send_email_otp(email):
 	return {"otp_sent": True, "message": otp}  # testing
 
 
-def verify_email_otp(email, otp):
+def verify_email_otp(email, otp: int):
 	saved_otp = frappe.cache().get_value(f"otp_{email}")
 
 	if not saved_otp:

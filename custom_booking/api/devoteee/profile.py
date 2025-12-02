@@ -70,11 +70,11 @@ def update_profile(
 @token_auth
 def update_cred(
 	phone: int | None = None,
-	otp_phone: str | None = None,
+	otp_phone: int | None = None,
 	email: str | None = None,
-	otp_email: str | None = None,
+	otp_email: int | None = None,
 	email2: str | None = None,
-	otp_email2: str | None = None,
+	otp_email2: int | None = None,
 ):
 	customer_id = frappe.local.form_dict.get("customer_id")
 
@@ -89,7 +89,7 @@ def update_cred(
 			status = send_email_otp(email)
 			return status["message"]
 		else:
-			verification_status = verify_email_otp(email, otp_email)
+			verification_status = verify_email_otp(email=email, otp=otp_email)
 			if verification_status["VERIFIED"]:
 				customer.custom_email = email
 			else:
@@ -100,7 +100,7 @@ def update_cred(
 			status = send_sms_otp(phone)
 			return status["message"]
 		else:
-			verification_status = verify_sms_otp(phone, otp_phone)
+			verification_status = verify_sms_otp(phone=phone, otp=otp_phone)
 			if verification_status["VERIFIED"]:
 				customer.custom_phone = phone
 			else:
@@ -111,7 +111,7 @@ def update_cred(
 			status = send_email_otp(email2)
 			return status["message"]
 		else:
-			verification_status = verify_email_otp(email2, otp_email2)
+			verification_status = verify_email_otp(email=email2, otp=otp_email2)
 			if verification_status["VERIFIED"]:
 				customer.custom_email2 = email2
 			else:
