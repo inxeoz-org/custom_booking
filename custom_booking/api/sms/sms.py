@@ -9,8 +9,8 @@ from typing_extensions import Dict
 from ..token.token import jwt_token
 
 
-def send_sms_otp(phone: int):
-	otp = random.randint(100000, 999999)
+def send_sms_otp(phone: str):
+	otp = str(random.randint(100000, 999999))
 	# store OTP
 	frappe.cache().set_value(f"otp_{phone}", otp, expires_in_sec=180)
 	print("#" * 30, "\n", otp, "\n", "#" * 30)
@@ -25,7 +25,7 @@ def send_sms_otp(phone: int):
 	return {"otp_sent": True, "message": otp}  # testing
 
 
-def verify_sms_otp(phone: int, otp: int):
+def verify_sms_otp(phone: str, otp: str):
 	saved_otp = frappe.cache().get_value(f"otp_{phone}")
 	print(type(saved_otp), "**" * 20, saved_otp, otp, saved_otp == otp)
 	if not saved_otp:
@@ -42,7 +42,7 @@ def verify_sms_otp(phone: int, otp: int):
 
 
 def send_email_otp(email):
-	otp = random.randint(100000, 999999)
+	otp = str(random.randint(100000, 999999))
 	# store OTP
 	frappe.cache().set_value(f"otp_{email}", otp, expires_in_sec=180)
 	print("#" * 30, "\n", otp, "\n", "#" * 30)
@@ -58,7 +58,7 @@ def send_email_otp(email):
 	return {"otp_sent": True, "message": otp}  # testing
 
 
-def verify_email_otp(email, otp: int):
+def verify_email_otp(email, otp: str):
 	saved_otp = frappe.cache().get_value(f"otp_{email}")
 
 	if not saved_otp:

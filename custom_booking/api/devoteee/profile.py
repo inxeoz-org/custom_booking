@@ -52,15 +52,15 @@ def update_profile(
 	customer = frappe.get_doc("Customer", customer_id)
 
 	if devoteee_name:
-		customer.customer_name = devoteee_name
+		customer.customer_name = devoteee_name.lower()
 	if gender:
-		customer.gender = gender
+		customer.gender = gender.lower()
 	if dob:
 		customer.custom_dob = dob
 	if aadhar:
 		customer.custom_aadhar = aadhar
 	if location:
-		customer.custom_location = location
+		customer.custom_location = location.lower()
 
 	customer.save()
 	return profile()
@@ -69,12 +69,12 @@ def update_profile(
 @frappe.whitelist(allow_guest=True)
 @token_auth
 def update_cred(
-	phone: int | None = None,
-	otp_phone: int | None = None,
+	phone: str | None = None,
+	otp_phone: str | None = None,
 	email: str | None = None,
-	otp_email: int | None = None,
+	otp_email: str | None = None,
 	email2: str | None = None,
-	otp_email2: int | None = None,
+	otp_email2: str | None = None,
 ):
 	customer_id = frappe.local.form_dict.get("customer_id")
 

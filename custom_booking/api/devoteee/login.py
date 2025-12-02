@@ -1,35 +1,18 @@
-import re
-import stat
-from pickletools import stackslice
-from xxlimited import new
-
 import frappe
 from frappe.utils import random_string
 from typing_extensions import Dict
 
 from ..sms.sms import send_sms_otp, verify_sms_otp
 from ..token.token import jwt_token
-
-
-def valid_phone(phone: int):
-	return len(f"{phone}") == 10
-	pass
-	if not phone:
-		return False
-	if not re.match(r"^\d{10}$", phone):
-		return False
-	return True
+from ..validation.validation import valid_otp, valid_phone
 
 
 @frappe.whitelist(allow_guest=True)
-def devoteee_login_req(phone: int, otp: int | None = None):
+def devoteee_login_req(phone: str, otp: str | None = None):
 	if not valid_phone(phone):
 		frappe.throw("Invalid phone number")
 
-	if otp is None:
-		status = send_sms_otp(phone)
-		return status["message"]
-	else:
+	if otp and valid_otp(otp):
 		verification_status = verify_sms_otp(phone=phone, otp=otp)
 		if verification_status["VERIFIED"]:
 			devoteee_id = create_customer(phone=phone)
@@ -39,8 +22,11 @@ def devoteee_login_req(phone: int, otp: int | None = None):
 		else:
 			return verification_status["message"]
 
+	status = send_sms_otp(phone)
+	return status["message"]
 
-def create_customer(phone: int | None = None, email: str | None = None, name: str | None = None):
+
+def create_customer(phone: str | None = None, email: str | None = None, name: str | None = None):
 	if phone is None and email is None:
 		return None
 
