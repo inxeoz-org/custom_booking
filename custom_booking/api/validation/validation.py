@@ -19,7 +19,7 @@ def valid_aadhar(aadhar: str):
 
 
 def valid_gender(gender: str):
-	return gender in ["Male", "Female", "Other"]
+	return gender.lower() in ["male", "female", "other"]
 
 
 def valid_dob(dob: str):
