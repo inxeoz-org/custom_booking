@@ -37,17 +37,11 @@ def profile():
 @token_auth
 def update_profile(
 	devoteee_name: str | None = None,
-	email: str | None = None,
-	otp_email: str | None = None,
 	gender: str | None = None,
 	dob: str | None = None,
 	aadhar: str | None = None,
 	location: str | None = None,
 	companion: Dict | None = None,
-	phone: int | None = None,
-	otp: str | None = None,
-	email2: str | None = None,
-	otp_email2: str | None = None,
 ):
 	customer_id = frappe.local.form_dict.get("customer_id")
 
@@ -59,19 +53,6 @@ def update_profile(
 
 	if devoteee_name:
 		customer.customer_name = devoteee_name
-	if email:
-		previous_email = customer.custom_email
-
-		if email != previous_email:
-			if otp_email is None:
-				status = send_email_otp(email)
-				return status["message"]
-			else:
-				verification_status = verify_email_otp(email, otp_email)
-				if verification_status["VERIFIED"]:
-					customer.custom_email = email
-				else:
-					return verification_status["message"]
 	if gender:
 		customer.gender = gender
 	if dob:
@@ -80,18 +61,52 @@ def update_profile(
 		customer.custom_aadhar = aadhar
 	if location:
 		customer.custom_location = location
-	if phone:
-		if otp is None:
+
+	customer.save()
+	return profile()
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth
+def update_cred(
+	phone: int | None = None,
+	otp_phone: str | None = None,
+	email: str | None = None,
+	otp_email: str | None = None,
+	email2: str | None = None,
+	otp_email2: str | None = None,
+):
+	customer_id = frappe.local.form_dict.get("customer_id")
+
+	if not customer_id:
+		frappe.throw("customer_id is required")
+
+	frappe.set_user("Administrator")
+	customer = frappe.get_doc("Customer", customer_id)
+
+	if email and (customer.custom_email != email):
+		if otp_email is None:
+			status = send_email_otp(email)
+			return status["message"]
+		else:
+			verification_status = verify_email_otp(email, otp_email)
+			if verification_status["VERIFIED"]:
+				customer.custom_email = email
+			else:
+				return verification_status["message"]
+
+	if phone and (customer.custom_phone != phone):
+		if otp_phone is None:
 			status = send_sms_otp(phone)
 			return status["message"]
 		else:
-			verification_status = verify_sms_otp(phone, otp)
+			verification_status = verify_sms_otp(phone, otp_phone)
 			if verification_status["VERIFIED"]:
 				customer.custom_phone = phone
 			else:
 				return verification_status["message"]
 
-	if email2:
+	if email2 and (customer.email2 != email2):
 		if otp_email2 is None:
 			status = send_email_otp(email2)
 			return status["message"]
