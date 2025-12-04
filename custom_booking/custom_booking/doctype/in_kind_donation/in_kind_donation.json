@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2025-12-02 22:10:36.041721",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "donar",
+  "donation_date",
+  "item_category",
+  "item_description",
+  "quantity",
+  "unit",
+  "condition",
+  "storage_location",
+  "section_break_iipx",
+  "item_image_1",
+  "item_image_2",
+  "item_image_3",
+  "item_image_4"
+ ],
+ "fields": [
+  {
+   "fieldname": "donar",
+   "fieldtype": "Link",
+   "label": "Donar",
+   "options": "Donor"
+  },
+  {
+   "fieldname": "donation_date",
+   "fieldtype": "Date",
+   "label": "Donation Date"
+  },
+  {
+   "default": "Medicine",
+   "fieldname": "item_category",
+   "fieldtype": "Select",
+   "label": "Item Category",
+   "options": "Jewellery\nFood\nClothes\nEquipment\nToys\nMedicine\nBook\nOthers"
+  },
+  {
+   "fieldname": "item_description",
+   "fieldtype": "Small Text",
+   "label": "Item Description"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+   "default": "kg",
+   "fieldname": "unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "kg\nPieces\nLiters"
+  },
+  {
+   "default": "Used",
+   "fieldname": "condition",
+   "fieldtype": "Select",
+   "label": "Condition",
+   "options": "Good\nNew\nUsed\nExpired"
+  },
+  {
+   "fieldname": "storage_location",
+   "fieldtype": "Link",
+   "label": "Storage Location",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "section_break_iipx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item_image_1",
+   "fieldtype": "Attach Image",
+   "label": "item image 1"
+  },
+  {
+   "fieldname": "item_image_2",
+   "fieldtype": "Attach Image",
+   "label": "item image 2"
+  },
+  {
+   "fieldname": "item_image_3",
+   "fieldtype": "Attach Image",
+   "label": "item image 3"
+  },
+  {
+   "fieldname": "item_image_4",
+   "fieldtype": "Attach Image",
+   "label": "item image 4"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-02 22:27:24.741466",
+ "modified_by": "Administrator",
+ "module": "Custom Booking",
+ "name": "In-kind Donation",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
