@@ -34,22 +34,26 @@
    "search_index": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "devoteee_name",
    "fieldtype": "Data",
    "label": "devoteee name"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "gender",
    "fieldtype": "Link",
    "label": "gender",
    "options": "Gender"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "dob",
    "fieldtype": "Date",
    "label": "dob"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "phone",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -58,22 +62,26 @@
    "unique": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "email",
    "unique": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "location",
    "fieldtype": "Data",
    "label": "location"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "aadhar",
    "fieldtype": "Data",
    "label": "aadhar"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "companion",
    "fieldtype": "Table",
    "label": "companion",
@@ -90,7 +98,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-07 02:00:26.526886",
+ "modified": "2025-12-07 02:47:08.399065",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Devoteee",
