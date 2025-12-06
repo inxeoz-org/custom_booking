@@ -1,15 +1,16 @@
 import re
 
+import frappe
 from dateutil import parser
 
 
-def to_frappe_date(date_str):
+def to_frappe_date(date_str, format="%Y-%m-%d"):
 	"""Convert ANY date format to YYYY-MM-DD (Frappe standard)."""
 	try:
 		parsed = parser.parse(date_str, dayfirst=True)  # handles most formats
-		return parsed.strftime("%Y-%m-%d")
-	except Exception:
-		return None  # or raise ValidationError
+		return parsed.strftime(format)
+	except Exception as e:
+		frappe.throw(str(e))
 
 
 # as frappe originally uses data type for phone number
