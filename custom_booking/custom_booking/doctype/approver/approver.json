@@ -10,10 +10,14 @@
   "email",
   "phone",
   "dob",
-  "gender"
+  "gender",
+  "location",
+  "aadhar",
+  "amended_from"
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "fieldname": "approver_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -22,6 +26,7 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "email",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -39,21 +44,46 @@
    "unique": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "dob",
    "fieldtype": "Date",
    "label": "dob"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "gender",
    "fieldtype": "Link",
    "label": "gender",
    "options": "Gender"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "location"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "aadhar",
+   "fieldtype": "Data",
+   "label": "aadhar"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Approver",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2025-12-06 23:30:07.753321",
+ "modified": "2025-12-07 02:54:24.663413",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Approver",
