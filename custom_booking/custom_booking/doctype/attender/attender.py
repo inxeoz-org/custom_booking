@@ -14,19 +14,22 @@ class Attender(Document):
 
 
 @frappe.whitelist(allow_guest=True)
-def attender_login(phone: str, otp: str):
-	if not valid_phone(phone):
-		frappe.throw("Invalid phone number")
+def attender_login(phone: str, otp: str | None = None):
+	try:
+		if not valid_phone(phone):
+			frappe.throw("Invalid phone number")
 
-	if otp and valid_otp(otp):
-		verification_status = verify_sms_otp(phone=phone, otp=otp)
-		if verification_status["VERIFIED"]:
-			attender_id = frappe.get_value("Attender", {"phone": phone}, "name", ignore_permissions=True)
-			if attender_id is None:
-				return "Failed to create attender"
-			return jwt_token({"attender_id": attender_id})
-		else:
-			return verification_status["message"]
+		if otp and valid_otp(otp):
+			verification_status = verify_sms_otp(phone=phone, otp=otp)
+			if verification_status["VERIFIED"]:
+				attender_id = frappe.db.get_value("Attender", {"phone": phone}, "name")
+				if attender_id is None:
+					return "Failed to create attender"
+				return jwt_token({"attender_id": attender_id})
+			else:
+				return verification_status["message"]
 
-	status = send_sms_otp(phone)
-	return status["message"]
+		status = send_sms_otp(phone)
+		return status["message"]
+	except Exception as e:
+		frappe.throw(str(e))
