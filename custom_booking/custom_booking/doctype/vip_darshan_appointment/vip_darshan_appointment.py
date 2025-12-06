@@ -5,18 +5,18 @@ import frappe
 from frappe.model.document import Document
 
 
-class DarshanAppointment(Document):
+class VipDarshanAppointment(Document):
 	pass
 
 
 @frappe.whitelist()
-def insert_default_companion_from_customer_to_darshan_appointment(customer_id, darshan_appointment_id):
-	if not customer_id or not darshan_appointment_id:
+def insert_default_companion_from_customer_to_vip_darshan_appointment(customer_id, vip_darshan_appointment_id):
+	if not customer_id or not vip_darshan_appointment_id:
 		frappe.throw("Invalid Customer or Darshan Appointment ID")
 
 	# Fetch both documents
 	customer = frappe.get_doc("Customer", customer_id)
-	darshan_appointment = frappe.get_doc("Darshan Appointment", darshan_appointment_id)
+	vip_darshan_appointment = frappe.get_doc("Darshan Appointment", vip_darshan_appointment_id)
 
 	# Ensure field exists on customer
 	if not hasattr(customer, "custom_companion"):
@@ -26,9 +26,9 @@ def insert_default_companion_from_customer_to_darshan_appointment(customer_id, d
 	copied_value = customer.custom_companion
 
 	# Assign copy to appointment field
-	darshan_appointment.companion = copied_value
+	vip_darshan_appointment.companion = copied_value
 
 	# Save updated appointment
-	darshan_appointment.save(ignore_permissions=True)
+	vip_darshan_appointment.save(ignore_permissions=True)
 
-	return f"Copied companion '{copied_value}' to Darshan Appointment {darshan_appointment_id}"
+	return f"Copied companion '{copied_value}' to Darshan Appointment {vip_darshan_appointment_id}"

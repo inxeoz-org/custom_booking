@@ -1,18 +1,20 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "autoincrement",
  "creation": "2025-11-28 15:45:30.883549",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_jooc",
   "amended_from",
-  "customer",
-  "appointment_datetime",
+  "devoteee",
   "fetch_default_companion",
   "companion",
-  "darshan_type",
-  "state"
+  "slot",
+  "protocol",
+  "state",
+  "escort_person"
  ],
  "fields": [
   {
@@ -24,34 +26,16 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Darshan Appointment",
+   "options": "Vip Darshan Appointment",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "customer",
-   "options": "Customer"
-  },
-  {
-   "fieldname": "appointment_datetime",
-   "fieldtype": "Datetime",
-   "label": "appointment datetime"
   },
   {
    "fieldname": "companion",
    "fieldtype": "Table",
    "label": "companion",
    "options": "Companion Table"
-  },
-  {
-   "default": "vip darshan",
-   "fieldname": "darshan_type",
-   "fieldtype": "Data",
-   "label": "darshan_type",
-   "read_only": 1
   },
   {
    "fieldname": "state",
@@ -62,16 +46,41 @@
    "fieldname": "fetch_default_companion",
    "fieldtype": "Button",
    "label": "Fetch Default Companion"
+  },
+  {
+   "fieldname": "slot",
+   "fieldtype": "Link",
+   "label": "slot",
+   "options": "Slot"
+  },
+  {
+   "fieldname": "protocol",
+   "fieldtype": "Link",
+   "label": "protocol",
+   "options": "Vip Protocol"
+  },
+  {
+   "fieldname": "devoteee",
+   "fieldtype": "Link",
+   "label": "devoteee",
+   "options": "Devoteee"
+  },
+  {
+   "fieldname": "escort_person",
+   "fieldtype": "Link",
+   "label": "escort person",
+   "options": "Attender"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-11-28 17:09:02.466447",
+ "modified": "2025-12-06 23:44:19.818168",
  "modified_by": "Administrator",
  "module": "Custom Booking",
- "name": "Darshan Appointment",
+ "name": "Vip Darshan Appointment",
+ "naming_rule": "Autoincrement",
  "owner": "Administrator",
  "permissions": [
   {

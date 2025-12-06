@@ -1,57 +1,43 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-11-28 10:59:35.867730",
+ "creation": "2025-12-06 20:06:03.186227",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "companion_name",
-  "gender",
-  "age",
-  "phone"
+  "slot_name",
+  "current_capacity"
  ],
  "fields": [
   {
-   "fieldname": "companion_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "companion name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "gender",
+   "fieldname": "slot_name",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "gender",
-   "options": "Gender",
-   "reqd": 1
+   "in_standard_filter": 1,
+   "label": "slot name",
+   "options": "Slot",
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1
   },
   {
-   "fieldname": "age",
+   "fieldname": "current_capacity",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "age",
+   "label": "current capacity",
    "non_negative": 1,
    "reqd": 1
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "phone",
-   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-07 01:13:58.508357",
+ "modified": "2025-12-06 22:20:01.741669",
  "modified_by": "Administrator",
  "module": "Custom Booking",
- "name": "Companion Table",
+ "name": "Slot Table",
  "owner": "Administrator",
  "permissions": [],
  "row_format": "Dynamic",
