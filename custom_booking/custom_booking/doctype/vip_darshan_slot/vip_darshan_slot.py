@@ -11,10 +11,13 @@ class VipDarshanSlot(Document):
 	pass
 
 
-# def get_vip_darshan_slots(slot_date):
-
-
 @frappe.whitelist(allow_guest=True)
-def slot_date_to_id(slot_date):
+def get_vip_darshan_slots(slot_date):
 	id = to_frappe_date(slot_date, format="%d-%m-%Y-1")
-	return id
+	slot_date_doc = frappe.get_doc("Vip Darshan Slot", id)
+	selected_fields = [
+		{"slot_name": row.slot_name, "current_capacity": row.current_capacity}
+		for row in slot_date_doc.slot_info
+	]
+
+	return selected_fields
