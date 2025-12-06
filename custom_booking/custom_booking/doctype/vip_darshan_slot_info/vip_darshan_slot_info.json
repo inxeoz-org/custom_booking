@@ -1,60 +1,39 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": ".DD.-.MM.-.YYYY.-.#.",
- "creation": "2025-12-06 20:05:18.894605",
+ "creation": "2025-12-07 03:33:55.521069",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "slot_date",
   "slot_info"
  ],
  "fields": [
   {
    "fieldname": "slot_info",
    "fieldtype": "Table",
-   "label": "Slot info",
+   "label": "slot info",
    "options": "Slot Table"
-  },
-  {
-   "fieldname": "slot_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "slot date",
-   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
+ "issingle": 1,
  "links": [],
- "modified": "2025-12-07 04:00:52.866818",
+ "modified": "2025-12-07 03:38:25.421420",
  "modified_by": "Administrator",
  "module": "Custom Booking",
- "name": "Vip Darshan Slot",
- "naming_rule": "Expression",
+ "name": "Vip Darshan Slot Info",
  "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
    "email": 1,
-   "export": 1,
    "print": 1,
    "read": 1,
-   "report": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Guest",
-   "share": 1
   }
  ],
  "row_format": "Dynamic",

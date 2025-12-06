@@ -7,7 +7,10 @@ from dateutil import parser
 def to_frappe_date(date_str, format="%Y-%m-%d"):
 	"""Convert ANY date format to YYYY-MM-DD (Frappe standard)."""
 	try:
+		print("*" * 20, date_str)
 		parsed = parser.parse(date_str, dayfirst=True)  # handles most formats
+
+		print("Converted to", parsed.strftime(format))
 		return parsed.strftime(format)
 	except Exception as e:
 		frappe.throw(str(e))

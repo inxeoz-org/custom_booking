@@ -9,7 +9,6 @@
   "slot_name",
   "start_time",
   "end_time",
-  "capacity",
   "description"
  ],
  "fields": [
@@ -38,15 +37,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "capacity",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "capacity",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
@@ -55,7 +45,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-06 22:37:37.637008",
+ "modified": "2025-12-07 03:37:30.999676",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Slot",
