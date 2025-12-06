@@ -62,6 +62,7 @@ def create_devoteee(
 			"phone": phone,
 			"email": email,
 			"is_companion": is_companion,
+			"docstatus": 1,
 		}
 	)
 
