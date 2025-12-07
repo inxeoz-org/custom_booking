@@ -14,7 +14,8 @@
   "state",
   "escort_person",
   "group_size",
-  "amended_from"
+  "amended_from",
+  "slot_date"
  ],
  "fields": [
   {
@@ -72,13 +73,19 @@
    "fieldtype": "Table",
    "label": "companion",
    "options": "Companion Table"
+  },
+  {
+   "fieldname": "slot_date",
+   "fieldtype": "Link",
+   "label": "slot date",
+   "options": "Vip Darshan Slot"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-07 17:05:25.719928",
+ "modified": "2025-12-07 18:26:04.232872",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Vip Darshan Appointment",
@@ -95,6 +102,21 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
    "select": 1,
    "share": 1,
    "submit": 1,

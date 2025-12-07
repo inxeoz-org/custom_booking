@@ -24,7 +24,7 @@ def attender_login(phone: str, otp: str | None = None):
 			if verification_status["VERIFIED"]:
 				attender_id = frappe.db.get_value("Attender", {"phone": phone}, "name")
 				if attender_id is None:
-					return "Failed to create attender"
+					return "Failed to get attender"
 				return jwt_token({"attender_id": attender_id})
 			else:
 				return verification_status["message"]
@@ -33,3 +33,9 @@ def attender_login(phone: str, otp: str | None = None):
 		return status["message"]
 	except Exception as e:
 		frappe.throw(str(e))
+
+
+@frappe.whitelist(allow_guest=True)
+def get_list_of_available_attenders(slot_date: str | None = None, slot: str | None = None):
+	## we need to implement using slot_date and slot_name
+	return frappe.db.get_list("Attender", ignore_permissions=True)
