@@ -1,48 +1,26 @@
 # Copyright (c) 2025, inxeoz and contributors
 # For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
-from typing_extensions import Dict, List
 
-from custom_booking.custom_booking.doctype.api.token.token import token_auth
-from custom_booking.custom_booking.doctype.api.validation.validation import to_frappe_date
-from custom_booking.custom_booking.doctype.vip_darshan_slot.vip_darshan_slot import create_slot
+from ..api.validation.validation import to_frappe_date
+from ..vip_darshan_slot.vip_darshan_slot import create_slot
 
 
 class VipDarshanAppointment(Document):
 	pass
 
 
-@frappe.whitelist(allow_guest=True)
-@token_auth("devoteee_id")
-def create_appointment(slot, slot_date, protocol, state, companion: List):
-	try:
-		devoteee_id = frappe.local.form_dict["devoteee_id"]
-		new_appointment = frappe.new_doc("Vip Darshan Appointment")
-		new_appointment.devoteee_id = devoteee_id
-		new_appointment.slot = slot
-		slot_date = create_slot(slot_date)
-		new_appointment.slot_date = slot_date
-		new_appointment.protocol = protocol
-		new_appointment.state = state
+def attach_appointment_to_slot(slot_date, appointment_id):
+	slot = frappe.db.get_value("Vip Darshan Appointment", {"name": appointment_id}, "slot")
+	group_size = frappe.db.get_value("Vip Darshan Appointment", {"name": appointment_id}, "group_size")
 
-		for c in companion:
-			print("companion ", c["companion_name"])
-			print("age ", c["age"])
-			print("gender ", c["gender"])
-			print("phone ", c["phone"])
+	slot_date_doc = create_slot(slot_date)
+	current_slot_capacity = slot_date_doc.slot_info[slot].capacity
 
-			child_row = frappe.new_doc("Companion Table")
-			child_row.companion_name = c["companion_name"]
-			child_row.age = c["age"]
-			child_row.gender = c["gender"]
-			child_row.phone = c["phone"]
-
-			new_appointment.companion.append(child_row)
-
-		new_appointment.group_size = len(companion) + 1
-		new_appointment.save(ignore_permissions=True)
-		return new_appointment.name
-	except Exception as e:
-		frappe.throw(str(e))
+	if current_slot_capacity >= group_size:
+		slot_date_doc.slot_info[slot].capacity -= group_size
+		slot_date_doc.append("appointments", {"appointment": appointment_id})
+		slot_date_doc.save(ignore_permissions=True)
+	else:
+		frappe.throw("Slot capacity exceeded")
