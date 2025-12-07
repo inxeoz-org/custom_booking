@@ -38,7 +38,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-06 22:55:14.400642",
+ "modified": "2025-12-08 01:51:17.056923",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Vip Protocol",
@@ -56,6 +56,15 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Devoteee Role",
+   "share": 1
   }
  ],
  "row_format": "Dynamic",
