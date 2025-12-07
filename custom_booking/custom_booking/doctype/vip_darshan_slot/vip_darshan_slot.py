@@ -36,14 +36,19 @@ def create_slot(slot_date):
 
 @frappe.whitelist(allow_guest=True)
 def get_vip_darshan_slots(slot_date):
-	slot_date_doc = create_slot(slot_date)
-	# filter fields
-	selected_fields = [
-		{"slot_name": row.slot_name, "current_capacity": row.current_capacity}
-		for row in slot_date_doc.slot_info
-	]
+	try:
+		slot_date_name = create_slot(slot_date)
 
-	return selected_fields
+		slot_date_doc = frappe.get_doc("Vip Darshan Slot", slot_date_name)
+		# filter fields
+		selected_fields = [
+			{"slot_name": row.slot_name, "current_capacity": row.current_capacity}
+			for row in slot_date_doc.slot_info
+		]
+
+		return selected_fields
+	except Exception as e:
+		frappe.throw(str(e))
 
 
 def attach_appointment_to_slot(slot_date, appointment_id):
