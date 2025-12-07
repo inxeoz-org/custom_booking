@@ -7,6 +7,7 @@ from typing_extensions import Dict, List
 
 from custom_booking.custom_booking.doctype.api.token.token import token_auth
 from custom_booking.custom_booking.doctype.api.validation.validation import to_frappe_date
+from custom_booking.custom_booking.doctype.vip_darshan_slot.vip_darshan_slot import create_slot
 
 
 class VipDarshanAppointment(Document):
@@ -21,7 +22,8 @@ def create_appointment(slot, slot_date, protocol, state, companion: List):
 		new_appointment = frappe.new_doc("Vip Darshan Appointment")
 		new_appointment.devoteee = devoteee_id
 		new_appointment.slot = slot
-		new_appointment.slot_date = to_frappe_date(slot_date)
+		slot_date = create_slot(slot_date)
+		new_appointment.slot_date = slot_date
 		new_appointment.protocol = protocol
 		new_appointment.state = state
 

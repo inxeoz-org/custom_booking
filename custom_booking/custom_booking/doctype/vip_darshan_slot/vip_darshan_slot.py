@@ -24,14 +24,14 @@ def create_slot(slot_date):
 	# if exists → return directly
 	if frappe.db.exists("Vip Darshan Slot", id):
 		slot_date_doc = frappe.get_doc("Vip Darshan Slot", id)
-		return slot_date_doc
+		return slot_date_doc.name
 	else:
 		default_slot_info = frappe.get_doc("Vip Darshan Slot Info")
 		slot_date_doc = frappe.new_doc("Vip Darshan Slot")
 		slot_date_doc.slot_date = to_frappe_date(slot_date)
 		slot_date_doc.slot_info = default_slot_info.slot_info
 		slot_date_doc.insert(ignore_permissions=True)
-		return slot_date_doc
+		return slot_date_doc.name
 
 
 @frappe.whitelist(allow_guest=True)
