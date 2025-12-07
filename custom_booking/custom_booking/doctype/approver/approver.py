@@ -59,7 +59,9 @@ def approve_vip_appointment(appointment_id: str):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("approver_id")
-def list_of_vip_appointments(devoteee_id: str | None = None, workflow_state: str | None = None):
+def list_of_vip_appointments(
+	escort_person: str | None = None, devoteee_id: str | None = None, workflow_state: str | None = None
+):
 	filters = {}
 
 	# Add filters only if values exist
@@ -68,6 +70,9 @@ def list_of_vip_appointments(devoteee_id: str | None = None, workflow_state: str
 
 	if workflow_state:
 		filters["workflow_state"] = workflow_state
+
+	if escort_person:
+		filters["escort_person"] = escort_person
 
 	appointments = frappe.get_all(
 		"Vip Darshan Appointment",
