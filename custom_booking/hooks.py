@@ -277,4 +277,12 @@ fixtures = [
 	{"doctype": "Website Theme"},
 	# translations
 	{"doctype": "Translation"},
+	{"dt": "Slot", "filters": [["name", "!=", ""]]},
+	{"dt": "Vip Protocol", "filters": [["name", "!=", ""]]},
+	{"dt": "Approver", "filters": [["name", "!=", ""]]},
+	{"dt": "Attender", "filters": [["name", "!=", ""]]},
+	{"dt": "Devoteee", "filters": [["name", "!=", ""]]},
+	{"dt": "Vip Darshan Slot Info", "filters": [["name", "!=", ""]]},
+	{"dt": "Vip Darshan Slot", "filters": [["name", "!=", ""]]},
+	{"dt": "Vip Darshan Appointment", "filters": [["name", "!=", ""]]},
 ]

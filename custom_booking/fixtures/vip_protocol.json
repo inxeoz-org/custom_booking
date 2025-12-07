@@ -1,0 +1,52 @@
+[
+ {
+  "amended_from": null,
+  "description": "Highest protocol level, reserved for the President, with full security, Z+ protection, and absolute priority",
+  "docstatus": 1,
+  "doctype": "Vip Protocol",
+  "modified": "2025-12-08 03:07:11.002129",
+  "name": "President of India Protocol",
+  "protocol_level": 1,
+  "protocol_name": "President of India Protocol"
+ },
+ {
+  "amended_from": null,
+  "description": "Protocol for the Prime Minister, ensuring Z+ security, controlled movement, and top-priority arrangements",
+  "docstatus": 1,
+  "doctype": "Vip Protocol",
+  "modified": "2025-12-08 03:07:10.998406",
+  "name": "Prime Minister Protocol",
+  "protocol_level": 2,
+  "protocol_name": "Prime Minister Protocol"
+ },
+ {
+  "amended_from": null,
+  "description": "For Chief Justice of India, Cabinet Ministers, and equivalent ranks; includes high security and coordinated escort",
+  "docstatus": 1,
+  "doctype": "Vip Protocol",
+  "modified": "2025-12-08 03:07:10.994169",
+  "name": "Chief Justice & Cabinet Minister Protocol",
+  "protocol_level": 3,
+  "protocol_name": "Chief Justice & Cabinet Minister Protocol"
+ },
+ {
+  "amended_from": null,
+  "description": "For State Governors and Chief Ministers; includes VIP access, escort team, and controlled entry",
+  "docstatus": 1,
+  "doctype": "Vip Protocol",
+  "modified": "2025-12-08 03:07:10.989523",
+  "name": "State Governor & Chief Minister Protocol",
+  "protocol_level": 4,
+  "protocol_name": "State Governor & Chief Minister Protocol"
+ },
+ {
+  "amended_from": null,
+  "description": "Protocol for Lok Sabha and Rajya Sabha MPs; offers priority entry and official-status handling",
+  "docstatus": 1,
+  "doctype": "Vip Protocol",
+  "modified": "2025-12-08 03:07:10.978379",
+  "name": "Member of Parliament Protocol",
+  "protocol_level": 5,
+  "protocol_name": "Member of Parliament Protocol"
+ }
+]

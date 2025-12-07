@@ -1,0 +1,22 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Vip Darshan Slot Info",
+  "modified": "2025-12-08 03:02:01.036193",
+  "name": "Vip Darshan Slot Info",
+  "slot_info": [
+   {
+    "current_capacity": 40,
+    "slot_name": "Morning Aarti"
+   },
+   {
+    "current_capacity": 40,
+    "slot_name": "Afternoon Darshan"
+   },
+   {
+    "current_capacity": 40,
+    "slot_name": "Evening Special Darshan"
+   }
+  ]
+ }
+]
