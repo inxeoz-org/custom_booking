@@ -7,7 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_jooc",
-  "devoteee",
+  "devoteee_id",
   "companion",
   "slot",
   "protocol",
@@ -50,12 +50,6 @@
    "options": "Vip Protocol"
   },
   {
-   "fieldname": "devoteee",
-   "fieldtype": "Link",
-   "label": "devoteee",
-   "options": "Devoteee"
-  },
-  {
    "fieldname": "escort_person",
    "fieldtype": "Link",
    "label": "escort person",
@@ -79,13 +73,19 @@
    "fieldtype": "Link",
    "label": "slot date",
    "options": "Vip Darshan Slot"
+  },
+  {
+   "fieldname": "devoteee_id",
+   "fieldtype": "Link",
+   "label": "devoteee_id",
+   "options": "Devoteee"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-07 19:50:58.445141",
+ "modified": "2025-12-07 23:52:07.007099",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Vip Darshan Appointment",

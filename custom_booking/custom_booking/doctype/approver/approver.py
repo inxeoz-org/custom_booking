@@ -40,7 +40,7 @@ def approver_login(phone: str, otp: str | None = None):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("approver_id")  # purely for external auth/tracking
-def approve_vip_appointment(appointment_id: str):
+def approve_vip_appointment(appointment_id: str, action: str = "Approve"):
 	frappe.set_user("approver@example.com")
 	try:
 		doc = frappe.get_doc("Vip Darshan Appointment", appointment_id, ignore_permissions=True)
@@ -60,7 +60,7 @@ def approve_vip_appointment(appointment_id: str):
 		doc.escort_person = attender_list[0].name
 		doc.save(ignore_permissions=True)
 
-		apply_workflow(doc, "Approve")
+		apply_workflow(doc, action)
 
 		return {
 			"status": "success",

@@ -6,6 +6,7 @@ from frappe.model.document import Document
 from typing_extensions import Dict, List
 
 from custom_booking.custom_booking.doctype.api.token.token import token_auth
+from custom_booking.custom_booking.doctype.api.validation.validation import to_frappe_date
 
 
 class VipDarshanAppointment(Document):
@@ -14,15 +15,13 @@ class VipDarshanAppointment(Document):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("devoteee_id")
-def create_appointment(slot, protocol, state, companion: List):
+def create_appointment(slot, slot_date, protocol, state, companion: List):
 	try:
-		# print("Companion *** " * 100, companions)
-		# companions = frappe.parse_json(companions)
-
 		devoteee_id = frappe.local.form_dict["devoteee_id"]
 		new_appointment = frappe.new_doc("Vip Darshan Appointment")
 		new_appointment.devoteee = devoteee_id
 		new_appointment.slot = slot
+		new_appointment.slot_date = to_frappe_date(slot_date)
 		new_appointment.protocol = protocol
 		new_appointment.state = state
 
