@@ -6,6 +6,9 @@ from frappe.model.document import Document
 from frappe.model.workflow import apply_workflow
 
 from custom_booking.custom_booking.doctype.attender.attender import get_list_of_available_attenders
+from custom_booking.custom_booking.doctype.vip_darshan_appointment.vip_darshan_appointment import (
+	attach_appointment_to_slot,
+)
 
 from ..api.sms.sms import send_sms_otp, verify_sms_otp
 from ..api.token.token import jwt_token, token_auth
@@ -61,6 +64,9 @@ def approve_vip_appointment(appointment_id: str, action: str = "Approve"):
 		doc.save(ignore_permissions=True)
 
 		apply_workflow(doc, action)
+
+		if action == "Approve":
+			attach_appointment_to_slot(appointment_id)
 
 		return {
 			"status": "success",
