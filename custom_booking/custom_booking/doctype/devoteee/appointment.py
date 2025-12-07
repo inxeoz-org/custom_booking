@@ -73,6 +73,7 @@ def get_appointment_details(appointment_id):
 			return {
 				"name": appointment_doc.name,
 				"slot_date": appointment_doc.slot_date,
+				"slot": appointment_doc.slot,
 				"protocol": appointment_doc.protocol,
 				"state": appointment_doc.state,
 				"group_size": appointment_doc.group_size,
@@ -101,7 +102,7 @@ def get_appointment_list():
 		appointments = frappe.get_all(
 			"Vip Darshan Appointment",
 			filters={"devoteee_id": devoteee_id},
-			fields=["name", "slot_date", "protocol", "state", "group_size", "workflow_state"],
+			fields=["name", "slot_date", "slot", "protocol", "state", "group_size", "workflow_state"],
 		)
 		return appointments
 	except Exception as e:
