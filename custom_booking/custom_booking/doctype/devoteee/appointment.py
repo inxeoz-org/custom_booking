@@ -21,16 +21,13 @@ def create_appointment(slot, slot_date, protocol, state, companion: List):
 		new_appointment.state = state
 
 		for c in companion:
-			print("companion ", c["companion_name"])
-			print("age ", c["age"])
-			print("gender ", c["gender"])
-			print("phone ", c["phone"])
-
 			child_row = frappe.new_doc("Companion Table")
-			child_row.companion_name = c["companion_name"]
-			child_row.age = c["age"]
-			child_row.gender = c["gender"]
-			child_row.phone = c["phone"]
+			child_row.companion_name = c.get("companion_name")
+			child_row.age = c.get("age")
+			child_row.gender = c.get("gender")
+			phone = c.get("phone")
+			if phone:
+				child_row.phone = phone
 
 			new_appointment.companion.append(child_row)
 
