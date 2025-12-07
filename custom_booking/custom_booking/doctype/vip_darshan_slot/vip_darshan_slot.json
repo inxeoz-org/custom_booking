@@ -7,14 +7,16 @@
  "engine": "InnoDB",
  "field_order": [
   "slot_date",
-  "slot_info"
+  "slot_info",
+  "appointments"
  ],
  "fields": [
   {
    "fieldname": "slot_info",
    "fieldtype": "Table",
    "label": "Slot info",
-   "options": "Slot Table"
+   "options": "Slot Table",
+   "read_only": 1
   },
   {
    "fieldname": "slot_date",
@@ -22,12 +24,18 @@
    "in_list_view": 1,
    "label": "slot date",
    "reqd": 1
+  },
+  {
+   "fieldname": "appointments",
+   "fieldtype": "Table",
+   "label": "appointments",
+   "options": "Vip Darshan Appointment Table"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-07 04:00:52.866818",
+ "modified": "2025-12-07 14:59:09.467890",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Vip Darshan Slot",
