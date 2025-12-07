@@ -16,7 +16,6 @@ class Attender(Document):
 
 
 @frappe.whitelist(allow_guest=True)
-@token_auth("attender_id")
 def attender_login(phone: str, otp: str | None = None):
 	try:
 		if not valid_phone(phone):
@@ -60,6 +59,7 @@ def mark_exit(appointment_id: str):
 			frappe.throw("Appointment not yet started")
 
 		apply_workflow(appointment_doc, "Mark Exit")
+		return get_attender_appointment_details(appointment_id)
 	except Exception as e:
 		frappe.throw(str(e))
 	finally:
@@ -105,24 +105,27 @@ def get_attender_appointment_list(
 	protocol: str | None = None,
 	state: str | None = None,
 ):
-	filter = {}
-	attender_id = frappe.local.form_dict["attender_id"]
-	filter["escort_person"] = attender_id
-	if status:
-		filter["status"] = status
-	elif state:
-		filter["state"] = state
-	elif protocol:
-		filter["protocol"] = protocol
-	elif slot_date:
-		filter["slot_date"] = slot_date
-	elif slot:
-		filter["slot"] = slot
-	elif devoteee_id:
-		filter["devoteee_id"] = devoteee_id
+	try:
+		filter = {}
+		attender_id = frappe.local.form_dict["attender_id"]
+		filter["escort_person"] = attender_id
+		if status:
+			filter["workflow_state"] = status
+		elif state:
+			filter["state"] = state
+		elif protocol:
+			filter["protocol"] = protocol
+		elif slot_date:
+			filter["slot_date"] = slot_date
+		elif slot:
+			filter["slot"] = slot
+		elif devoteee_id:
+			filter["devoteee_id"] = devoteee_id
 
-	return frappe.get_all(
-		"Vip Darshan Appointment",
-		filters=filter,
-		fields=["name", "slot", "protocol", "state", "status", "group_size"],
-	)
+		return frappe.get_all(
+			"Vip Darshan Appointment",
+			filters=filter,
+			fields=["name", "slot", "protocol", "state", "workflow_state", "group_size"],
+		)
+	except Exception as e:
+		frappe.throw(str(e))
