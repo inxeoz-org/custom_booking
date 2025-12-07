@@ -5,11 +5,24 @@
   "document_type": "Vip Darshan Appointment",
   "enable_action_confirmation": 0,
   "is_active": 1,
-  "modified": "2025-12-07 19:56:16.249543",
+  "modified": "2025-12-08 02:49:44.863008",
   "name": "Darshan Appointment Flow",
   "override_status": 0,
   "send_email_alert": 0,
   "states": [
+   {
+    "allow_edit": "Devoteee Role",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Draft",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
+   },
    {
     "allow_edit": "Approver Role",
     "avoid_status_override": 0,
@@ -39,6 +52,19 @@
    {
     "allow_edit": "Approver Role",
     "avoid_status_override": 0,
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Completed",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "Approver Role",
+    "avoid_status_override": 0,
     "doc_status": "2",
     "is_optional_state": 0,
     "message": null,
@@ -48,9 +74,33 @@
     "update_field": null,
     "update_value": null,
     "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "Administrator",
+    "avoid_status_override": 0,
+    "doc_status": "2",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Cancelled",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
    }
   ],
   "transitions": [
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "Devoteee Role",
+    "condition": null,
+    "next_state": "Pending",
+    "send_email_to_creator": 0,
+    "state": "Draft",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
    {
     "action": "Approve",
     "allow_self_approval": 1,
@@ -70,6 +120,50 @@
     "next_state": "Rejected",
     "send_email_to_creator": 0,
     "state": "Pending",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Mark Exit",
+    "allow_self_approval": 1,
+    "allowed": "Attender Role",
+    "condition": null,
+    "next_state": "Completed",
+    "send_email_to_creator": 0,
+    "state": "Approved",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel",
+    "allow_self_approval": 1,
+    "allowed": "Administrator",
+    "condition": null,
+    "next_state": "Cancelled",
+    "send_email_to_creator": 0,
+    "state": "Pending",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel",
+    "allow_self_approval": 1,
+    "allowed": "Administrator",
+    "condition": null,
+    "next_state": "Cancelled",
+    "send_email_to_creator": 0,
+    "state": "Approved",
+    "transition_tasks": null,
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel",
+    "allow_self_approval": 1,
+    "allowed": "Administrator",
+    "condition": null,
+    "next_state": "Cancelled",
+    "send_email_to_creator": 0,
+    "state": "Completed",
     "transition_tasks": null,
     "workflow_builder_id": null
    }
