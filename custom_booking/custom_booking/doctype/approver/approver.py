@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe.model.workflow import apply_workflow
 
 from custom_booking.custom_booking.doctype.attender.attender import get_list_of_available_attenders
 
@@ -37,45 +38,41 @@ def approver_login(phone: str, otp: str | None = None):
 		frappe.throw(str(e))
 
 
-from frappe.model.workflow import apply_workflow
-
-
 @frappe.whitelist(allow_guest=True)
-@token_auth("approver_id")
+@token_auth("approver_id")  # purely for external auth/tracking
 def approve_vip_appointment(appointment_id: str):
-	# ✅ Switch to a real system user with permission
-	frappe.set_user("Approver")
-
+	frappe.set_user("approver@example.com")
 	try:
-		appointment_doc = frappe.get_doc("Vip Darshan Appointment", appointment_id, ignore_permissions=True)
+		doc = frappe.get_doc("Vip Darshan Appointment", appointment_id, ignore_permissions=True)
+		doc.reload()
 
-		if not appointment_doc:
+		if not doc:
 			frappe.throw("Vip Darshan Appointment not found")
 
-		if appointment_doc.workflow_state == "Approved":
-			frappe.throw("Vip Darshan Appointment already approved")
+		if doc.workflow_state != "Pending":
+			frappe.throw(f"Invalid state: {doc.workflow_state}")
 
-		attender_list = get_list_of_available_attenders(
-			slot_date=appointment_doc.slot_date, slot=appointment_doc.slot
-		)
+		attender_list = get_list_of_available_attenders(slot_date=doc.slot_date, slot=doc.slot)
 
 		if not attender_list:
 			frappe.throw("No available attenders")
 
-		appointment_doc.escort_person = attender_list[0].name
-		appointment_doc.save(ignore_permissions=True)
+		doc.escort_person = attender_list[0].name
+		doc.save(ignore_permissions=True)
 
-		# ✅ THIS is the only valid way to change workflow state
-		apply_workflow(appointment_doc, "Approve")
+		apply_workflow(doc, "Approve")
 
-		return appointment_doc
+		return {
+			"status": "success",
+			"appointment": doc.name,
+			"final_state": doc.workflow_state,
+		}
 
 	except Exception:
-		frappe.log_error(frappe.get_traceback(), "VIP Approval Failed")
+		frappe.log_error(frappe.get_traceback(), "VIP Approval API Failed")
 		raise
 
 	finally:
-		# ✅ Always restore Guest user
 		frappe.set_user("Guest")
 
 
