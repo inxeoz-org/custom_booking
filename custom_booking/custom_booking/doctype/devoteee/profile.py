@@ -1,3 +1,4 @@
+from posixpath import devnull
 from typing import Dict
 
 import frappe
@@ -153,4 +154,13 @@ def remove_companion(companion_id: str):
 def companion():
 	devoteee_id = frappe.local.form_dict.get("devoteee_id")
 	devoteee = frappe.get_doc("Devoteee", devoteee_id)
-	return {"companions": devoteee.companion}
+	return [
+		{
+			"name": child.name,
+			"companion_name": child.companion_name,
+			"age": child.age,
+			"gender": child.gender,
+			"phone": child.phone,
+		}
+		for child in devoteee.companion
+	]
