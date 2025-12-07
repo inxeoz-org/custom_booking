@@ -36,7 +36,7 @@ def create_appointment(slot, slot_date, protocol, state, companion: List):
 
 		new_appointment.group_size = len(companion) + 1
 		new_appointment.save(ignore_permissions=True)
-		return new_appointment.name
+		return get_appointment_details(new_appointment.name)
 	except Exception as e:
 		frappe.throw(str(e))
 
@@ -77,7 +77,16 @@ def get_appointment_details(appointment_id):
 				"state": appointment_doc.state,
 				"group_size": appointment_doc.group_size,
 				"status": appointment_doc.workflow_state,
-				"companion": [child.as_dict() for child in appointment_doc.companion],
+				"companion": [
+					{
+						"name": row.name,
+						"companion_name": row.companion_name,
+						"gender": row.gender,
+						"age": row.age,
+						"phone": row.phone,
+					}
+					for row in appointment_doc.companion
+				],
 			}
 
 	except Exception as e:
