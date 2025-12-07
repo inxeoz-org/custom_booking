@@ -20,7 +20,7 @@ def create_appointment(slot, slot_date, protocol, state, companion: List):
 	try:
 		devoteee_id = frappe.local.form_dict["devoteee_id"]
 		new_appointment = frappe.new_doc("Vip Darshan Appointment")
-		new_appointment.devoteee = devoteee_id
+		new_appointment.devoteee_id = devoteee_id
 		new_appointment.slot = slot
 		slot_date = create_slot(slot_date)
 		new_appointment.slot_date = slot_date
