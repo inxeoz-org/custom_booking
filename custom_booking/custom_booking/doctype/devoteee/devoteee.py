@@ -89,7 +89,7 @@ def google_login(token):
 		email = idinfo["email"]
 		name = idinfo.get("name")
 
-		devoteee_id = create_devoteee(email=email, name=name)
+		devoteee_id = create_devoteee(email=email, devoteee_name=name)
 
 		return jwt_token({"devoteee_id": devoteee_id})
 

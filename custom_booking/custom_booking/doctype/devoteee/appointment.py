@@ -78,6 +78,7 @@ def get_appointment_details(appointment_id):
 				"state": appointment_doc.state,
 				"group_size": appointment_doc.group_size,
 				"status": appointment_doc.workflow_state,
+				"escort_person": appointment_doc.escort_person,
 				"companion": [
 					{
 						"name": row.name,
