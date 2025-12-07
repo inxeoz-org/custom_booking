@@ -39,6 +39,8 @@ def create_appointment(slot, protocol, state, companion: List):
 			child_row.phone = c["phone"]
 
 			new_appointment.companion.append(child_row)
+
+		new_appointment.group_size = len(companion) + 1
 		new_appointment.save(ignore_permissions=True)
 		return new_appointment.name
 	except Exception as e:

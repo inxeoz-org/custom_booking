@@ -11,7 +11,7 @@ class VipDarshanSlot(Document):
 	def autoname(self):
 		# use your ID instead of naming series
 		if self.slot_date:
-			id = to_frappe_date(self.slot_date, format="%d-%m-%Y-1")
+			id = to_frappe_date(self.slot_date, format="%d-%m-%Y")
 			self.name = id
 		else:
 			# fallback: use default pattern
@@ -19,7 +19,7 @@ class VipDarshanSlot(Document):
 
 
 def create_slot(slot_date):
-	id = to_frappe_date(slot_date, format="%d-%m-%Y-1")
+	id = to_frappe_date(slot_date, format="%d-%m-%Y")
 
 	# if exists → return directly
 	if frappe.db.exists("Vip Darshan Slot", id):
