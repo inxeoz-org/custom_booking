@@ -30,7 +30,7 @@ def get_vip_darshan_slots(slot_date):
 		else:
 			default_slot_info = frappe.get_doc("Vip Darshan Slot Info")
 			slot_date_doc = frappe.new_doc("Vip Darshan Slot")
-			slot_date_doc.slot_date = slot_date
+			slot_date_doc.slot_date = to_frappe_date(slot_date)
 			slot_date_doc.slot_info = default_slot_info.slot_info
 			slot_date_doc.insert()
 
