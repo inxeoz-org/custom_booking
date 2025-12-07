@@ -35,7 +35,9 @@ def attender_login(phone: str, otp: str | None = None):
 		frappe.throw(str(e))
 
 
-@frappe.whitelist(allow_guest=True)
+# @frappe.whitelist(allow_guest=True)
+
+
 def get_list_of_available_attenders(slot_date: str | None = None, slot: str | None = None):
 	## we need to implement using slot_date and slot_name
 	return frappe.db.get_list("Attender", ignore_permissions=True)

@@ -4,10 +4,21 @@
   "doctype": "Client Script",
   "dt": "Donor",
   "enabled": 1,
-  "modified": "2025-12-04 17:03:47.079401",
+  "modified": "2025-12-04 17:15:40.068236",
   "module": "Custom Booking",
   "name": "Fetch customer details for donor",
   "script": "frappe.ui.form.on('Donor', {\n    custom_customer: function(frm) {\n        if (!frm.doc.custom_customer) return;\n\n        frappe.db.get_value('Customer', frm.doc.custom_customer, \n            ['customer_name', 'custom_phone', 'custom_email'], function(r) {\n            if (r) {\n                frm.set_value('donor_name', r.customer_name);\n                frm.set_value('email', r.custom_email);\n                frm.set_value('donor_type', 'Individual');\n                frm.refresh_field('email');\n                frm.refresh_field('donor_type');\n            }\n        });\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Vip Darshan Slot",
+  "enabled": 0,
+  "modified": "2025-12-06 20:34:59.161569",
+  "module": "Custom Booking",
+  "name": "Fetch Slot Default Info",
+  "script": "\n\nfrappe.ui.form.on(\"Vip Darshan Slot\", {\n    onload: function(frm) {\n        if (frm.is_new() && frm.doc.slot_info.length === 0) {\n            frm.add_child(\"slot_info\", {\n                slot_name: \"Morning Slot\",\n                start_time: \"09:00\",\n                end_time: \"10:00\"\n            });\n            frm.refresh_field(\"slot_info\");\n        }\n    }\n});\n",
   "view": "Form"
  }
 ]

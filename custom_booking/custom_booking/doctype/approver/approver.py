@@ -37,24 +37,46 @@ def approver_login(phone: str, otp: str | None = None):
 		frappe.throw(str(e))
 
 
+from frappe.model.workflow import apply_workflow
+
+
 @frappe.whitelist(allow_guest=True)
 @token_auth("approver_id")
 def approve_vip_appointment(appointment_id: str):
-	appointment_doc = frappe.get_doc("Appointment", appointment_id)
+	# ✅ Switch to a real system user with permission
+	frappe.set_user("Approver")
 
-	if not appointment_doc:
-		frappe.throw("Appointment not found")
-	if appointment_doc.status != "Submitted":
-		frappe.throw("Appointment is not submitted")
+	try:
+		appointment_doc = frappe.get_doc("Vip Darshan Appointment", appointment_id, ignore_permissions=True)
 
-	attender_list = get_list_of_available_attenders(
-		slot_date=appointment_doc.slot_date, slot=appointment_doc.slot
-	)
-	appointment_doc.escort_person = attender_list[0].name
-	appointment_doc.status = "Approved"
-	appointment_doc.save()
+		if not appointment_doc:
+			frappe.throw("Vip Darshan Appointment not found")
 
-	return "Appointment approved successfully"
+		if appointment_doc.workflow_state == "Approved":
+			frappe.throw("Vip Darshan Appointment already approved")
+
+		attender_list = get_list_of_available_attenders(
+			slot_date=appointment_doc.slot_date, slot=appointment_doc.slot
+		)
+
+		if not attender_list:
+			frappe.throw("No available attenders")
+
+		appointment_doc.escort_person = attender_list[0].name
+		appointment_doc.save(ignore_permissions=True)
+
+		# ✅ THIS is the only valid way to change workflow state
+		apply_workflow(appointment_doc, "Approve")
+
+		return appointment_doc
+
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "VIP Approval Failed")
+		raise
+
+	finally:
+		# ✅ Always restore Guest user
+		frappe.set_user("Guest")
 
 
 @frappe.whitelist(allow_guest=True)
