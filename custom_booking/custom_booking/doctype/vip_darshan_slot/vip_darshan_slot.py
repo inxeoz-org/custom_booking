@@ -44,3 +44,18 @@ def get_vip_darshan_slots(slot_date):
 	]
 
 	return selected_fields
+
+
+def attach_appointment_to_slot(slot_date, appointment_id):
+	slot = frappe.db.get_value("Vip Darshan Appointment", {"name": appointment_id}, "slot")
+	group_size = frappe.db.get_value("Vip Darshan Appointment", {"name": appointment_id}, "group_size")
+
+	slot_date_doc = create_slot(slot_date)
+	current_slot_capacity = slot_date_doc.slot_info[slot].capacity
+
+	if current_slot_capacity >= group_size:
+		slot_date_doc.slot_info[slot].capacity -= group_size
+		slot_date_doc.append("appointments", {"appointment": appointment_id})
+		slot_date_doc.save(ignore_permissions=True)
+	else:
+		frappe.throw("Slot capacity exceeded")

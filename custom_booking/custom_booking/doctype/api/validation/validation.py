@@ -2,6 +2,7 @@ import re
 
 import frappe
 from dateutil import parser
+from typing_extensions import Dict
 
 
 def to_frappe_date(date_str, format="%Y-%m-%d"):
@@ -59,3 +60,25 @@ def valid_12hrtime(time: str):
 
 def valid_otp(otp: str):
 	return len(f"{otp}") == 6
+
+
+def validate_companion(companion: Dict):
+	for key, value in companion.items():
+		if key == "companion_name":
+			if not valid_name(value):
+				frappe.throw("Invalid name")
+		elif key == "email":
+			if not valid_email(value):
+				frappe.throw("Invalid email")
+		elif key == "phone":
+			if not valid_phone(value):
+				frappe.throw("Invalid phone number")
+		elif key == "gender":
+			if not valid_gender(value):
+				frappe.throw("Invalid gender")
+		elif key == "dob":
+			if not valid_dob(value):
+				frappe.throw("Invalid date of birth")
+		elif key == "location":
+			if not valid_location(value):
+				frappe.throw("Invalid location")

@@ -1,20 +1,21 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "autoincrement",
+ "autoname": "format: VIP-{######}",
  "creation": "2025-11-28 15:45:30.883549",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_jooc",
-  "amended_from",
   "devoteee",
   "fetch_default_companion",
-  "companion",
+  "companions",
   "slot",
   "protocol",
   "state",
-  "escort_person"
+  "escort_person",
+  "group_size",
+  "amended_from"
  ],
  "fields": [
   {
@@ -30,12 +31,6 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
-  },
-  {
-   "fieldname": "companion",
-   "fieldtype": "Table",
-   "label": "companion",
-   "options": "Companion Table"
   },
   {
    "fieldname": "state",
@@ -70,20 +65,34 @@
    "fieldtype": "Link",
    "label": "escort person",
    "options": "Attender"
+  },
+  {
+   "fieldname": "group_size",
+   "fieldtype": "Int",
+   "label": "group size",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "companions",
+   "fieldtype": "Table",
+   "label": "companions",
+   "options": "Companion Table"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-06 23:44:19.818168",
+ "modified": "2025-12-07 16:27:23.820031",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Vip Darshan Appointment",
- "naming_rule": "Autoincrement",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -92,6 +101,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1

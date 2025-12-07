@@ -7,7 +7,6 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_fw5u",
-  "amended_from",
   "is_companion",
   "devoteee_name",
   "gender",
@@ -16,7 +15,8 @@
   "email",
   "location",
   "aadhar",
-  "companion"
+  "companion",
+  "amended_from"
  ],
  "fields": [
   {
@@ -98,7 +98,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-07 02:47:08.399065",
+ "modified": "2025-12-07 16:27:52.207066",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Devoteee",
@@ -106,6 +106,7 @@
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -114,6 +115,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1
