@@ -61,47 +61,47 @@ def update_profile(
 @frappe.whitelist(allow_guest=True)
 @token_auth("devoteee_id")
 def update_cred(
-	phone: str | None = None,
+	new_phone: str | None = None,
 	otp_phone: str | None = None,
-	email: str | None = None,
+	new_email: str | None = None,
 	otp_email: str | None = None,
-	email2: str | None = None,
+	new_email2: str | None = None,
 	otp_email2: str | None = None,
 ):
 	devoteee_id = frappe.local.form_dict.get("devoteee_id")
 
 	devoteee = frappe.get_doc("Devoteee", devoteee_id, ignore_permissions=True)
 
-	if email and (devoteee.email != email):
+	if new_email and (devoteee.email != new_email):
 		if otp_email is None:
-			status = send_email_otp(email)
+			status = send_email_otp(new_email)
 			return status["message"]
 		else:
-			verification_status = verify_email_otp(email=email, otp=otp_email)
+			verification_status = verify_email_otp(email=new_email, otp=otp_email)
 			if verification_status["VERIFIED"]:
-				devoteee.email = email
+				devoteee.email = new_email
 			else:
 				return verification_status["message"]
 
-	if phone and (devoteee.phone != phone):
+	if new_phone and (devoteee.phone != new_phone):
 		if otp_phone is None:
-			status = send_sms_otp(phone)
+			status = send_sms_otp(new_phone)
 			return status["message"]
 		else:
-			verification_status = verify_sms_otp(phone=phone, otp=otp_phone)
+			verification_status = verify_sms_otp(phone=new_phone, otp=otp_phone)
 			if verification_status["VERIFIED"]:
-				devoteee.phone = phone
+				devoteee.phone = new_phone
 			else:
 				return verification_status["message"]
 
-	if email2 and (devoteee.email2 != email2):
+	if new_email2 and (devoteee.email2 != new_email2):
 		if otp_email2 is None:
-			status = send_email_otp(email2)
+			status = send_email_otp(new_email2)
 			return status["message"]
 		else:
-			verification_status = verify_email_otp(email=email2, otp=otp_email2)
+			verification_status = verify_email_otp(email=new_email2, otp=otp_email2)
 			if verification_status["VERIFIED"]:
-				devoteee.email2 = email2
+				devoteee.email2 = new_email2
 			else:
 				return verification_status["message"]
 
