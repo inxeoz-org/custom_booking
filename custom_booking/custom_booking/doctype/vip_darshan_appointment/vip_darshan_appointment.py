@@ -14,7 +14,7 @@ class VipDarshanAppointment(Document):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("devoteee_id")
-def create_appointment(slot, protocol, state, companions: List):
+def create_appointment(slot, protocol, state, companion: List):
 	try:
 		# print("Companion *** " * 100, companions)
 		# companions = frappe.parse_json(companions)
@@ -26,7 +26,7 @@ def create_appointment(slot, protocol, state, companions: List):
 		new_appointment.protocol = protocol
 		new_appointment.state = state
 
-		for c in companions:
+		for c in companion:
 			print("companion ", c["companion_name"])
 			print("age ", c["age"])
 			print("gender ", c["gender"])

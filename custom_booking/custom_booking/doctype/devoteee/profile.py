@@ -133,4 +133,4 @@ def add_companion(
 
 def companion(devoteee_id: str):
 	devoteee = frappe.get_doc("Devoteee", devoteee_id)
-	return {"companions": devoteee.companions}
+	return {"companion": devoteee.companion}
