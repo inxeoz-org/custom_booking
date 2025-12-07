@@ -38,7 +38,7 @@ def create_appointment(slot, protocol, state, companion: List):
 			child_row.gender = c["gender"]
 			child_row.phone = c["phone"]
 
-			new_appointment.companions.append(child_row)
+			new_appointment.companion.append(child_row)
 		new_appointment.save(ignore_permissions=True)
 		return new_appointment.name
 	except Exception as e:

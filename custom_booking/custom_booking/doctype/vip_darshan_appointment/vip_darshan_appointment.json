@@ -8,7 +8,6 @@
  "field_order": [
   "section_break_jooc",
   "devoteee",
-  "fetch_default_companion",
   "companion",
   "slot",
   "protocol",
@@ -36,11 +35,6 @@
    "fieldname": "state",
    "fieldtype": "Data",
    "label": "state"
-  },
-  {
-   "fieldname": "fetch_default_companion",
-   "fieldtype": "Button",
-   "label": "Fetch Default Companion"
   },
   {
    "fieldname": "slot",
@@ -84,7 +78,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-07 17:00:38.965979",
+ "modified": "2025-12-07 17:05:25.719928",
  "modified_by": "Administrator",
  "module": "Custom Booking",
  "name": "Vip Darshan Appointment",

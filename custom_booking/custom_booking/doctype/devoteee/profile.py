@@ -111,26 +111,46 @@ def update_cred(
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("devoteee_id")
-def add_companion(
-	companion_name: str, companion_age: int, companion_gender: str, companion_phone: str | None = None
-):
+def add_companion(companion_name: str, age: int, gender: str, phone: str | None = None):
 	devoteee_id = frappe.local.form_dict.get("devoteee_id")
 	devoteee_doc = frappe.get_doc("Devoteee", devoteee_id, ignore_permissions=True)
 	try:
-		devoteee_doc.companions.append(
-			{
-				"companion_name": companion_name,
-				"age": companion_age,
-				"gender": companion_gender,
-				"phone": companion_phone,
-			}
-		)
+		child_row = frappe.new_doc("Companion Table")
+		child_row.companion_name = companion_name
+		child_row.age = age
+		child_row.gender = gender
+		if phone:
+			child_row.phone = phone
+
+		devoteee_doc.companion.append(child_row)
+
 		devoteee_doc.save(ignore_permissions=True)
-		return companion(devoteee_id)
+		return companion()
 	except Exception as e:
 		frappe.throw(str(e))
 
 
-def companion(devoteee_id: str):
+@frappe.whitelist(allow_guest=True)
+@token_auth("devoteee_id")
+def remove_companion(companion_id: str):
+	devoteee_id = frappe.local.form_dict.get("devoteee_id")
+	devoteee_doc = frappe.get_doc("Devoteee", devoteee_id)
+
+	# find child row by name
+	child_row = next((d for d in devoteee_doc.companion if d.name == companion_id), None)
+
+	if not child_row:
+		frappe.throw("Companion not found")
+
+	devoteee_doc.remove(child_row)
+	devoteee_doc.save(ignore_permissions=True)
+
+	return companion()
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth("devoteee_id")
+def companion():
+	devoteee_id = frappe.local.form_dict.get("devoteee_id")
 	devoteee = frappe.get_doc("Devoteee", devoteee_id)
-	return {"companion": devoteee.companion}
+	return {"companions": devoteee.companion}
