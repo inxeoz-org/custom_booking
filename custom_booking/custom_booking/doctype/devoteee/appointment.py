@@ -56,6 +56,8 @@ def update_appointment(appointment_id, slot, slot_date, protocol, state, compani
 		appointment_doc.protocol = protocol
 		appointment_doc.state = state
 
+		appointment_doc.companion = []
+
 		for c in companion:
 			child_row = frappe.new_doc("Companion Table")
 			child_row.companion_name = c.get("companion_name")
@@ -103,7 +105,9 @@ def get_appointment_details(appointment_id):
 	try:
 		appointment_doc = frappe.get_doc("Vip Darshan Appointment", appointment_id)
 		if appointment_doc.devoteee_id == devoteee_id:
+			devoteee_name = frappe.get_value("Devoteee", devoteee_id, "devoteee_name")
 			return {
+				"devoteee_name": devoteee_name,
 				"name": appointment_doc.name,
 				"slot_date": appointment_doc.slot_date,
 				"slot": appointment_doc.slot,
