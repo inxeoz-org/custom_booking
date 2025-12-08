@@ -39,6 +39,43 @@ def create_appointment(slot, slot_date, protocol, state, companion: List):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("devoteee_id")
+def update_appointment(appointment_id, slot, slot_date, protocol, state, companion: List):
+	try:
+		devoteee_id = frappe.local.form_dict["devoteee_id"]
+		appointment_doc = frappe.get_doc("Vip Darshan Appointment", appointment_id)
+
+		if appointment_doc.devoteee_id != devoteee_id:
+			frappe.throw("Invalid Appointment")
+
+		if appointment_doc.workflow_state != "Draft":
+			frappe.throw("Appointment is not in Draft state")
+
+		appointment_doc.slot = slot
+		slot_date = create_slot(slot_date)
+		appointment_doc.slot_date = slot_date
+		appointment_doc.protocol = protocol
+		appointment_doc.state = state
+
+		for c in companion:
+			child_row = frappe.new_doc("Companion Table")
+			child_row.companion_name = c.get("companion_name")
+			child_row.age = c.get("age")
+			child_row.gender = c.get("gender")
+			phone = c.get("phone")
+			if phone:
+				child_row.phone = phone
+
+			appointment_doc.companion.append(child_row)
+
+		appointment_doc.group_size = len(companion) + 1
+		appointment_doc.save(ignore_permissions=True)
+		return get_appointment_details(appointment_doc.name)
+	except Exception as e:
+		frappe.throw(str(e))
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth("devoteee_id")
 def submit_appointment(appointment_id):
 	devoteee_id = frappe.local.form_dict["devoteee_id"]
 	frappe.set_user("devoteee@example.com")
