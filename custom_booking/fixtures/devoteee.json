@@ -1,1 +1,47 @@
-[]
+[
+ {
+  "aadhar": null,
+  "amended_from": null,
+  "companion": [],
+  "devoteee_name": "2222222223",
+  "dob": null,
+  "docstatus": 1,
+  "doctype": "Devoteee",
+  "email": null,
+  "gender": null,
+  "is_companion": 0,
+  "location": null,
+  "modified": "2025-12-08 06:02:27.677128",
+  "name": "DV000000000002",
+  "phone": "2222222223"
+ },
+ {
+  "aadhar": "11111",
+  "amended_from": null,
+  "companion": [
+   {
+    "age": 45,
+    "companion_name": "Vishal Kumar",
+    "gender": "Male",
+    "phone": null
+   },
+   {
+    "age": 20,
+    "companion_name": "kumar sanu",
+    "gender": "Male",
+    "phone": null
+   }
+  ],
+  "devoteee_name": "gajju",
+  "dob": "2011-12-01",
+  "docstatus": 1,
+  "doctype": "Devoteee",
+  "email": "dev@inxeoz.com",
+  "gender": "Female",
+  "is_companion": 0,
+  "location": "indore",
+  "modified": "2025-12-08 05:53:25.166786",
+  "name": "DV000000000001",
+  "phone": "2222222222"
+ }
+]

@@ -1,1 +1,16 @@
-[]
+[
+ {
+  "aadhar": "5566",
+  "amended_from": null,
+  "approver_name": "kunal",
+  "dob": "2005-10-24",
+  "docstatus": 1,
+  "doctype": "Approver",
+  "email": null,
+  "gender": "Male",
+  "location": "mumbai",
+  "modified": "2025-12-08 03:30:14.973649",
+  "name": "AP000001",
+  "phone": "9999999999"
+ }
+]

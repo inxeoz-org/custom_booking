@@ -11,16 +11,6 @@
  },
  {
   "amended_from": null,
-  "description": "Protocol for the Prime Minister, ensuring Z+ security, controlled movement, and top-priority arrangements",
-  "docstatus": 1,
-  "doctype": "Vip Protocol",
-  "modified": "2025-12-08 03:07:10.998406",
-  "name": "Prime Minister Protocol",
-  "protocol_level": 2,
-  "protocol_name": "Prime Minister Protocol"
- },
- {
-  "amended_from": null,
   "description": "For Chief Justice of India, Cabinet Ministers, and equivalent ranks; includes high security and coordinated escort",
   "docstatus": 1,
   "doctype": "Vip Protocol",
@@ -48,5 +38,15 @@
   "name": "Member of Parliament Protocol",
   "protocol_level": 5,
   "protocol_name": "Member of Parliament Protocol"
+ },
+ {
+  "amended_from": null,
+  "description": "Protocol for the Prime Minister, ensuring Z+ security, controlled movement, and top-priority arrangements",
+  "docstatus": 1,
+  "doctype": "Vip Protocol",
+  "modified": "2025-12-08 03:07:10.998406",
+  "name": "Prime Minister Protocol",
+  "protocol_level": 2,
+  "protocol_name": "Prime Minister Protocol"
  }
 ]

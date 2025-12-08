@@ -1,28 +1,6 @@
 [
  {
   "amended_from": null,
-  "description": "Special morning darshan slot with limited devotees",
-  "docstatus": 1,
-  "doctype": "Slot",
-  "end_time": "7:00:00",
-  "modified": "2025-12-08 02:59:55.633299",
-  "name": "Morning Aarti",
-  "slot_name": "Morning Aarti",
-  "start_time": "6:00:00"
- },
- {
-  "amended_from": null,
-  "description": "Regular afternoon darshan slot",
-  "docstatus": 1,
-  "doctype": "Slot",
-  "end_time": "14:00:00",
-  "modified": "2025-12-08 03:00:45.232495",
-  "name": "Afternoon Darshan",
-  "slot_name": "Afternoon Darshan",
-  "start_time": "13:00:00"
- },
- {
-  "amended_from": null,
   "description": "Special evening slot including aarti viewing",
   "docstatus": 1,
   "doctype": "Slot",
@@ -42,6 +20,28 @@
   "name": "Morning 2",
   "slot_name": "Morning 2",
   "start_time": "10:00:00"
+ },
+ {
+  "amended_from": null,
+  "description": "Special morning darshan slot with limited devotees",
+  "docstatus": 1,
+  "doctype": "Slot",
+  "end_time": "7:00:00",
+  "modified": "2025-12-08 02:59:55.633299",
+  "name": "Morning Aarti",
+  "slot_name": "Morning Aarti",
+  "start_time": "6:00:00"
+ },
+ {
+  "amended_from": null,
+  "description": "Regular afternoon darshan slot",
+  "docstatus": 1,
+  "doctype": "Slot",
+  "end_time": "14:00:00",
+  "modified": "2025-12-08 03:00:45.232495",
+  "name": "Afternoon Darshan",
+  "slot_name": "Afternoon Darshan",
+  "start_time": "13:00:00"
  },
  {
   "amended_from": null,

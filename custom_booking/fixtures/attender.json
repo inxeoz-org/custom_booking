@@ -1,1 +1,16 @@
-[]
+[
+ {
+  "aadhar": null,
+  "amended_from": null,
+  "attender_name": "lowkey",
+  "dob": null,
+  "docstatus": 1,
+  "doctype": "Attender",
+  "email": null,
+  "gender": null,
+  "location": null,
+  "modified": "2025-12-08 03:28:46.447413",
+  "name": "AT00001",
+  "phone": "5555555555"
+ }
+]
