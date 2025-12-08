@@ -8,7 +8,7 @@ from frappe.utils import getdate, nowdate
 
 from ..api.sms.sms import send_sms_otp, verify_sms_otp
 from ..api.token.token import jwt_token, token_auth
-from ..api.validation.validation import to_frappe_date, valid_otp, valid_phone
+from ..api.validation.validation import valid_otp, valid_phone
 
 
 class Attender(Document):
@@ -53,7 +53,7 @@ def mark_exit(appointment_id: str):
 			frappe.throw("Unauthorized Attender")
 
 		today = getdate(nowdate())
-		slot_date = getdate(to_frappe_date(appointment_doc.slot_date))
+		slot_date = getdate(appointment_doc.slot_date)
 
 		if slot_date > today:
 			frappe.throw("Appointment not yet started")

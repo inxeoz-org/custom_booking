@@ -4,17 +4,16 @@ import frappe
 from dateutil import parser
 from typing_extensions import Dict
 
+# def to_frappe_date(date_str, format="%Y-%m-%d"):
+# 	"""Convert ANY date format to YYYY-MM-DD (Frappe standard)."""
+# 	try:
+# 		print("*" * 20, date_str)
+# 		parsed = parser.parse(date_str, dayfirst=True)  # handles most formats
 
-def to_frappe_date(date_str, format="%Y-%m-%d"):
-	"""Convert ANY date format to YYYY-MM-DD (Frappe standard)."""
-	try:
-		print("*" * 20, date_str)
-		parsed = parser.parse(date_str, dayfirst=True)  # handles most formats
-
-		print("Converted to", parsed.strftime(format))
-		return parsed.strftime(format)
-	except Exception as e:
-		frappe.throw(str(e))
+# 		print("Converted to", parsed.strftime(format))
+# 		return parsed.strftime(format)
+# 	except Exception as e:
+# 		frappe.throw(str(e))
 
 
 # as frappe originally uses data type for phone number

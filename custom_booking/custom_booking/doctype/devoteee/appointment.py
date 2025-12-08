@@ -3,7 +3,6 @@ from frappe.model.document import Document
 from typing_extensions import Dict, List
 
 from custom_booking.custom_booking.doctype.api.token.token import token_auth
-from custom_booking.custom_booking.doctype.api.validation.validation import to_frappe_date
 from custom_booking.custom_booking.doctype.vip_darshan_slot.vip_darshan_slot import create_slot
 
 

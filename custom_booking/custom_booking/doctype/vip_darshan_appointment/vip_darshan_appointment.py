@@ -3,7 +3,6 @@
 import frappe
 from frappe.model.document import Document
 
-from ..api.validation.validation import to_frappe_date
 from ..vip_darshan_slot.vip_darshan_slot import create_slot
 
 

@@ -6,7 +6,6 @@ from frappe.utils import random_string
 
 from ..api.sms.sms import send_email_otp, send_sms_otp, verify_email_otp, verify_sms_otp
 from ..api.token.token import token_auth
-from ..api.validation.validation import to_frappe_date
 
 
 @frappe.whitelist(allow_guest=True)
@@ -47,7 +46,7 @@ def update_profile(
 		if gender:
 			devoteee.gender = gender.lower()
 		if dob:
-			devoteee.dob = to_frappe_date(dob)
+			devoteee.dob = dob
 		if aadhar:
 			devoteee.aadhar = aadhar
 		if location:
