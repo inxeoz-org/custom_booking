@@ -92,3 +92,36 @@ def list_of_vip_appointments(
 	)
 
 	return appointments
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth("approver_id")
+def get_appointment_details(appointment_id):
+	try:
+		appointment_doc = frappe.get_doc("Vip Darshan Appointment", appointment_id)
+
+		return appointment_doc
+		# return {
+		# 	"devoteee_name": devoteee_name,
+		# 	"name": appointment_doc.name,
+		# 	"slot_date": appointment_doc.slot_date,
+		# 	"slot": appointment_doc.slot,
+		# 	"protocol": appointment_doc.protocol,
+		# 	"state": appointment_doc.state,
+		# 	"group_size": appointment_doc.group_size,
+		# 	"workflow_state": appointment_doc.workflow_state,
+		# 	"escort_person": appointment_doc.escort_person,
+		# 	"companion": [
+		# 		{
+		# 			"name": row.name,
+		# 			"companion_name": row.companion_name,
+		# 			"gender": row.gender,
+		# 			"age": row.age,
+		# 			"phone": row.phone,
+		# 		}
+		# 		for row in appointment_doc.companion
+		# 	],
+		# }
+
+	except Exception as e:
+		frappe.throw(str(e))
