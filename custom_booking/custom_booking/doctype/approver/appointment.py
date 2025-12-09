@@ -1,5 +1,4 @@
-
-#get_appointment_stats
+# get_appointment_stats
 
 # Copyright (c) 2025, inxeoz and contributors
 # For license information, please see licensd
@@ -80,6 +79,7 @@ def list_of_vip_appointments(
 		"Vip Darshan Appointment",
 		filters=filters,
 		fields=[
+			"devoteee_id",
 			"name",
 			"slot_date",
 			"slot",
