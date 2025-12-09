@@ -7,7 +7,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.model.workflow import apply_workflow
 
-from custom_booking.custom_booking.doctype.attender.attender import get_list_of_available_attenders
+# from custom_booking.custom_booking.doctype.attender.attender import get_list_of_available_attenders
 from custom_booking.custom_booking.doctype.vip_darshan_appointment.vip_darshan_appointment import (
 	attach_appointment_to_slot,
 )
@@ -19,7 +19,7 @@ from ..api.validation.validation import valid_otp, valid_phone
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("approver_id")  # purely for external auth/tracking
-def apply_action_on_appointment(appointment_id: str, action: str = "Approve"):
+def apply_action_on_appointment(appointment_id: str, action: str = "Approve", attender_id: str | None = None):
 	frappe.set_user("approver@example.com")
 	try:
 		doc = frappe.get_doc("Vip Darshan Appointment", appointment_id, ignore_permissions=True)
@@ -30,13 +30,16 @@ def apply_action_on_appointment(appointment_id: str, action: str = "Approve"):
 
 		if doc.workflow_state != "Pending":
 			frappe.throw(f"Invalid state: {doc.workflow_state}")
+		# attender_list = get_list_of_available_attenders(slot_date=doc.slot_date, slot=doc.slot)
 
-		attender_list = get_list_of_available_attenders(slot_date=doc.slot_date, slot=doc.slot)
+		if attender_id:
+			doc.escort_person = attender_id
+		else:
+			attender_list = frappe.get_all("Attender")
+			if not attender_list:
+				frappe.throw("No available attenders")
+			doc.escort_person = attender_list[0]
 
-		if not attender_list:
-			frappe.throw("No available attenders")
-
-		doc.escort_person = attender_list[0].name
 		doc.save(ignore_permissions=True)
 
 		apply_workflow(doc, action)
@@ -122,6 +125,18 @@ def get_appointment_details(appointment_id):
 		# 		for row in appointment_doc.companion
 		# 	],
 		# }
+
+	except Exception as e:
+		frappe.throw(str(e))
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth("approver_id")
+def get_list_of_attenders():
+	try:
+		list_of_attenders = frappe.get_all("Attender")
+
+		return list_of_attenders
 
 	except Exception as e:
 		frappe.throw(str(e))
