@@ -277,7 +277,7 @@ fixtures = [
 	{"doctype": "Website Theme"},
 	# translations
 	{"doctype": "Translation"},
-	# {"dt": "Slot", "filters": [["name", "!=", ""]]},
+	{"dt": "Slot", "filters": [["name", "!=", ""]]},
 	{"dt": "Vip Protocol", "filters": [["name", "!=", ""]]},
 	# {"dt": "Approver", "filters": [["name", "!=", ""]]},
 	# {"dt": "Attender", "filters": [["name", "!=", ""]]},
