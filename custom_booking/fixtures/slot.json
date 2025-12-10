@@ -1,17 +1,6 @@
 [
  {
   "amended_from": null,
-  "description": null,
-  "docstatus": 2,
-  "doctype": "Slot",
-  "end_time": "20:00:00",
-  "modified": "2025-12-08 03:02:47.120252",
-  "name": "Morning 2",
-  "slot_name": "Morning 2",
-  "start_time": "10:00:00"
- },
- {
-  "amended_from": null,
   "description": "Special evening slot including aarti viewing",
   "docstatus": 1,
   "doctype": "Slot",
@@ -21,17 +10,7 @@
   "slot_name": "Evening Special Darshan",
   "start_time": "18:30:00"
  },
- {
-  "amended_from": null,
-  "description": null,
-  "docstatus": 2,
-  "doctype": "Slot",
-  "end_time": "2:00:00",
-  "modified": "2025-12-08 02:58:08.471593",
-  "name": "Eve 2",
-  "slot_name": "Eve 2",
-  "start_time": "9:00:00"
- },
+
  {
   "amended_from": null,
   "description": "Regular afternoon darshan slot",
