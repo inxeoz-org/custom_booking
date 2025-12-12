@@ -165,3 +165,38 @@ def get_appointment_stats(slot_date: str):
 		frappe.throw(str(e))
 	finally:
 		frappe.set_user("Guest")
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth("attender_id")
+def get_appointment_list(slot_date: str | None = None, completed: bool | None = None):
+	attender_id = frappe.local.form_dict["attender_id"]
+	frappe.set_user("attender@example.com")
+
+	try:
+		filters = {"escort_person": attender_id}
+		if slot_date:
+			filters["slot_date"] = slot_date
+		if completed:
+			filters["workflow_state"] = "Completed" if completed else "Approved"
+
+		appointments = frappe.get_all(
+			"Vip Darshan Appointment",
+			filters=filters,
+			fields=[
+				"devoteee_id",
+				"name",
+				"slot_date",
+				"slot",
+				"group_size",
+				"protocol",
+				"workflow_state",
+			],
+			order_by="slot_date, slot",
+		)
+
+		return appointments
+	except Exception as e:
+		frappe.throw(str(e))
+	finally:
+		frappe.set_user("Guest")
