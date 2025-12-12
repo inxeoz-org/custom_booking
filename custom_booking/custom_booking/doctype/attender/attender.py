@@ -129,3 +129,25 @@ def get_attender_appointment_list(
 		)
 	except Exception as e:
 		frappe.throw(str(e))
+
+
+@frappe.whitelist()
+@token_auth("attender_id")
+def get_appointment_stats(appointment_date: str):
+	attender_id = frappe.local.form_dict["attender_id"]
+
+	filters = {
+		"slot_date": appointment_date,
+		"escort_person": attender_id,
+	}
+
+	total_appointments = frappe.db.count("Vip Darshan Appointment", filters)
+	completed_appointments = frappe.db.count(
+		"Vip Darshan Appointment",
+		{**filters, "workflow_state": "Completed"},
+	)
+
+	return {
+		"total_appointments": total_appointments,
+		"completed_appointments": completed_appointments,
+	}
