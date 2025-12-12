@@ -55,8 +55,9 @@ def mark_exit(appointment_id: str):
 		today = getdate(nowdate())
 		slot_date = getdate(appointment_doc.slot_date)
 
-		if slot_date > today:
-			frappe.throw("Appointment not yet started")
+		# todo : testing
+		# if slot_date > today:
+		# 	frappe.throw("Appointment not yet started")
 
 		apply_workflow(appointment_doc, "Mark Exit")
 		return get_attender_appointment_details(appointment_id)
@@ -76,7 +77,7 @@ def get_attender_appointment_details(appointment_id: str):
 		if appointment_doc.escort_person != attender_id:
 			frappe.throw("Unauthorized Attender")
 
-		devoteee_doc = frappe.get_doc("Devotee", appointment_doc.devoteee_id)
+		devoteee_doc = frappe.get_doc("Devoteee", appointment_doc.devoteee_id)
 
 		return {
 			"devoteee_name": devoteee_doc.devoteee_name,
@@ -86,7 +87,7 @@ def get_attender_appointment_details(appointment_id: str):
 			"group_size": appointment_doc.group_size,
 			"slot_date": appointment_doc.slot_date,
 			"slot": appointment_doc.slot,
-			"status": appointment_doc.status,
+			"workflow_state": appointment_doc.workflow_state,
 			"companion": appointment_doc.companion,
 		}
 	except Exception as e:
@@ -131,23 +132,29 @@ def get_attender_appointment_list(
 		frappe.throw(str(e))
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 @token_auth("attender_id")
-def get_appointment_stats(appointment_date: str):
+def get_appointment_stats(slot_date: str):
 	attender_id = frappe.local.form_dict["attender_id"]
+	frappe.set_user("attender@example.com")
 
-	filters = {
-		"slot_date": appointment_date,
-		"escort_person": attender_id,
-	}
+	try:
+		filters = {
+			"slot_date": slot_date,
+			"escort_person": attender_id,
+		}
 
-	total_appointments = frappe.db.count("Vip Darshan Appointment", filters)
-	completed_appointments = frappe.db.count(
-		"Vip Darshan Appointment",
-		{**filters, "workflow_state": "Completed"},
-	)
+		total_appointments = frappe.db.count("Vip Darshan Appointment", filters)
+		completed_appointments = frappe.db.count(
+			"Vip Darshan Appointment",
+			{**filters, "workflow_state": "Completed"},
+		)
 
-	return {
-		"total_appointments": total_appointments,
-		"completed_appointments": completed_appointments,
-	}
+		return {
+			"total_appointments": total_appointments,
+			"completed_appointments": completed_appointments,
+		}
+	except Exception as e:
+		frappe.throw(str(e))
+	finally:
+		frappe.set_user("Guest")
