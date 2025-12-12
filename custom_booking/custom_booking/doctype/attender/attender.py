@@ -98,9 +98,9 @@ def get_attender_appointment_details(appointment_id: str):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("attender_id")
-def get_attender_appointment_list(
+def get_appointment_list(
 	devoteee_id: str | None = None,
-	status: str | None = None,
+	workflow_state: str | None = None,
 	slot_date: str | None = None,
 	slot: str | None = None,
 	protocol: str | None = None,
@@ -110,8 +110,8 @@ def get_attender_appointment_list(
 		filter = {}
 		attender_id = frappe.local.form_dict["attender_id"]
 		filter["escort_person"] = attender_id
-		if status:
-			filter["workflow_state"] = status
+		if workflow_state:
+			filter["workflow_state"] = workflow_state
 		elif state:
 			filter["state"] = state
 		elif protocol:
@@ -141,15 +141,16 @@ def get_today_appointment_stats():
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("attender_id")
-def get_appointment_stats(slot_date: str):
+def get_appointment_stats(slot_date: str | None = None):
 	attender_id = frappe.local.form_dict["attender_id"]
 	frappe.set_user("attender@example.com")
 
 	try:
 		filters = {
-			"slot_date": slot_date,
 			"escort_person": attender_id,
 		}
+		if slot_date:
+			filters["slot_date"] = slot_date
 
 		total_appointments = frappe.db.count("Vip Darshan Appointment", filters)
 		completed_appointments = frappe.db.count(
@@ -161,41 +162,6 @@ def get_appointment_stats(slot_date: str):
 			"total_appointments": total_appointments,
 			"completed_appointments": completed_appointments,
 		}
-	except Exception as e:
-		frappe.throw(str(e))
-	finally:
-		frappe.set_user("Guest")
-
-
-@frappe.whitelist(allow_guest=True)
-@token_auth("attender_id")
-def get_appointment_list(slot_date: str | None = None, completed: bool | None = None):
-	attender_id = frappe.local.form_dict["attender_id"]
-	frappe.set_user("attender@example.com")
-
-	try:
-		filters = {"escort_person": attender_id}
-		if slot_date:
-			filters["slot_date"] = slot_date
-		if completed:
-			filters["workflow_state"] = "Completed" if completed else "Approved"
-
-		appointments = frappe.get_all(
-			"Vip Darshan Appointment",
-			filters=filters,
-			fields=[
-				"devoteee_id",
-				"name",
-				"slot_date",
-				"slot",
-				"group_size",
-				"protocol",
-				"workflow_state",
-			],
-			order_by="slot_date, slot",
-		)
-
-		return appointments
 	except Exception as e:
 		frappe.throw(str(e))
 	finally:
