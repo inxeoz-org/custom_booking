@@ -60,7 +60,7 @@ def mark_exit(appointment_id: str):
 		# 	frappe.throw("Appointment not yet started")
 
 		apply_workflow(appointment_doc, "Mark Exit")
-		return get_attender_appointment_details(appointment_id)
+		return get_appointment(appointment_id)
 	except Exception as e:
 		frappe.throw(str(e))
 	finally:
@@ -69,7 +69,7 @@ def mark_exit(appointment_id: str):
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("attender_id")
-def get_attender_appointment_details(appointment_id: str):
+def get_appointment(appointment_id: str):
 	attender_id = frappe.local.form_dict["attender_id"]
 	frappe.set_user("attender@example.com")
 	try:
