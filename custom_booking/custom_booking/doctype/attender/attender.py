@@ -134,6 +134,13 @@ def get_attender_appointment_list(
 
 @frappe.whitelist(allow_guest=True)
 @token_auth("attender_id")
+def get_today_appointment_stats():
+	today = str(getdate(nowdate()))
+	return get_appointment_stats(slot_date=today)
+
+
+@frappe.whitelist(allow_guest=True)
+@token_auth("attender_id")
 def get_appointment_stats(slot_date: str):
 	attender_id = frappe.local.form_dict["attender_id"]
 	frappe.set_user("attender@example.com")
