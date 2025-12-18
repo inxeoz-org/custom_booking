@@ -285,7 +285,16 @@ fixtures = [
 	{"dt": "Vip Darshan Slot Info", "filters": [["name", "!=", ""]]},
 	# {"dt": "Vip Darshan Slot", "filters": [["name", "!=", ""]]},
 	# # {"dt": "Vip Darshan Appointment", "filters": [["name", "!=", ""]]},
-	{"dt": "User", "filters": [["email", "=", "devoteee@example.com"]]},
-	{"dt": "User", "filters": [["email", "=", "approver@example.com"]]},
-	{"dt": "User", "filters": [["email", "=", "attender@example.com"]]},
+	{
+		"dt": "User",
+		"filters": [
+			["email", "in", ["devoteee@example.com", "approver@example.com", "attender@example.com"]]
+		],
+	},
+]
+
+
+commands = [
+	"custom_booking.commands.fixtures.prepare-user-fixtures",
+	"custom_booking.commands.fixtures.export-prepared-fixtures",
 ]
