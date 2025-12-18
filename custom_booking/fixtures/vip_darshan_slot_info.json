@@ -7,14 +7,23 @@
   "slot_info": [
    {
     "current_capacity": 40,
+    "parent": "Vip Darshan Slot Info",
+    "parentfield": "slot_info",
+    "parenttype": "Vip Darshan Slot Info",
     "slot_name": "Morning Aarti"
    },
    {
     "current_capacity": 40,
+    "parent": "Vip Darshan Slot Info",
+    "parentfield": "slot_info",
+    "parenttype": "Vip Darshan Slot Info",
     "slot_name": "Afternoon Darshan"
    },
    {
     "current_capacity": 40,
+    "parent": "Vip Darshan Slot Info",
+    "parentfield": "slot_info",
+    "parenttype": "Vip Darshan Slot Info",
     "slot_name": "Evening Special Darshan"
    }
   ]

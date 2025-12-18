@@ -16,11 +16,11 @@
   "image": null,
   "image_height": 0.0,
   "image_width": 0.0,
-  "is_default": 0,
+  "is_default": 1,
   "letter_head_name": "Company Letterhead",
   "modified": "2025-11-27 14:35:09.376392",
   "name": "Company Letterhead",
-  "source": "HTML"
+  "source": "Image"
  },
  {
   "align": "Left",
@@ -43,6 +43,6 @@
   "letter_head_name": "Company Letterhead - Grey",
   "modified": "2025-11-27 14:35:09.544259",
   "name": "Company Letterhead - Grey",
-  "source": "HTML"
+  "source": "Image"
  }
 ]
